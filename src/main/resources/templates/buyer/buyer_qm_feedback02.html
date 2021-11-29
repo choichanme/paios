@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/header :: headerFragment" ></th:block>
+
+<div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적</span> 관리</p>
+        <p class="txt">견적 피드백</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="buyer_qm_feedback02">
+    <div class="inner">
+      <th:block th:replace="fragment/buyer_process :: buyerProcessFragment" ></th:block>
+
+      <div class="docu_wrap">
+        <div class="docu_btn_area_top">
+          <button class="btn_style01" onclick="allowQuo();">견적수락</button>
+          <button class="btn_style01 cancel modal_trigger" data-modal-link="modal01">견적거절</button>
+        </div>
+        <div class="docu_cont">
+
+          <div class="docu_section01 docu_top_section">
+            <div class="flex_wrap">
+              <img src="../img/komal_logo.svg" alt="" class="logo">
+              <ul>
+                <li>#16, Hyuenheim building, GeojeJungangro 13gil,
+                  7, Geojesi, Gyeongnam, Rep. Of Korea
+                  PAIOS CORPORATION
+                <li>Tel: +82 55 634 1968</li>
+                <li>http://www.paiosgroup.com</li>
+                <li>E-mail:leo@paiosgroup.com</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="docu_section02">
+            <div class="docu_tit_wrap flex_wrap bor">
+              <h2>KOMAL Quotation</h2>
+              <p class="essential_tit"><span class="essential"></span> 필수항목</p>
+            </div>
+
+            <table class="tbl_style02 docu_table">
+              <tbody>
+                <tr>
+                  <th>Date</th>
+                  <td>
+                    <input type="text" placeholder="30th, Jan 2022" disabled>
+                  </td>
+                  <th>Quote Ref No.</th>
+                  <td>
+                    <input type="text" id="rfqQno" th:value="${QuotationVo.getRfqQno()}" placeholder="123456789, 1-2 " disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>To</th>
+                  <td>
+                    <input type="text" th:value="${QuotationVo.getRfqTo()}" placeholder="KOMAL PLAFORM" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Attention</th>
+                  <td>
+                    <input type="text" th:value="${QuotationVo.getRfqAttention()}" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Re <span class="sub_info">Quotation of</span></th>
+                  <td>
+                    <input type="text" th:value="${QuotationVo.getRfqItem()}"  placeholder="1-3" disabled>
+                    <p class="point_info">
+                      Dear Sir, Madam with regards to the subject, we are very pleased to submit our proposal as below.
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="grid_wrap">
+              <div id="quotationGrid"></div>
+            </div>
+
+            <div class="dash_line"></div>
+
+            <div class="docu_tit_wrap">
+              <h3><span class="material-icons-outlined">description</span>Term & Conditions</h3>
+            </div>
+
+            <table class="tbl_style02 docu_table">
+              <tbody>
+                <tr>
+                  <th>RFQ Deadline</th>
+                  <td>
+                    <input type="text" th:value="${QuotationVo.getDeadline()}" placeholder="견적마감일, 1-3" disabled>
+                  </td>
+                <tr>
+                  <th>Payment term</th>
+                  <td>
+                    <input type="text" th:value="${QuotationVo.getPayTermsFlag()}" placeholder="1-5, T/T" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Currency</th>
+                  <td>
+                    <input type="text" th:value="${QuotationVo.getCurrencyFlag()}" placeholder="USD" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Delivery Location</th>
+                  <td>
+                    <input type="text" th:value="${QuotationVo.getDelLoc()}" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Delivery term</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>HS CODE</th>
+                  <td>
+                    <input type="text" th:value="${QuotationVo.getSQuoHscode()}"  placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Packing information</th>
+                  <td>
+                    <input type="text" th:value="${QuotationVo.getSQuoPkinfo()}" placeholder="" disabled>
+                    <p class="point_info">
+                      To be quote, We may need Data sheet, Trim Material (Disc, Sheet seat), Face to Face dimension
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01" onclick="allowQuo();">견적수락</button>
+          <button class="btn_style01 cancel modal_trigger" data-modal-link="modal01">견적거절</button>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 모달창 -->
+    <div class="modal modal01">
+      <div class="modal_bg"></div>
+      <div class="modal_cont reject">
+        <span class="material-icons-outlined close">close</span>
+        <h3>견적 거절에 대한 이유를 알려주세요!<br>더 나은 서비스로 보답하겠습니다.</h3>
+
+        <div class="reject_box">
+          <input type="checkbox" id="c1" name="cc" value="c1">
+          <label for="c1"><div class="chk_icon"></div> <span>비싼금액</span></label>
+
+          <input type="checkbox" id="c2" name="cc" value="c2">
+          <label for="c2"><div class="chk_icon"></div> <span>품질 부적합</span> </label>
+
+          <input type="checkbox" id="c3" name="cc" value="c3">
+          <label for="c3"><div class="chk_icon"></div> <span>늦은 배송일</span></label><br>
+
+          <input type="checkbox" id="c4" name="cc" value="c4">
+          <label for="c4"><div class="chk_icon"></div> <span>빠른 결제일</span></label>
+
+          <input type="checkbox" id="c5" name="cc" value="c5">
+          <label for="c5"><div class="chk_icon"></div> <span>조건 불일치  (서술형)</span></label>
+        </div>
+
+        <div class="show_cont active">
+          <input id="rejectTxt" type="text" name="" value="">
+        </div>
+
+        <button class="btn_style01" onclick="rejectQuo();">작성완료</button>
+        <button class="nochoice" onclick="rejectQuo();">선택하지 않고 끝내기</button>
+      </div>
+    </div>
+  </div>
+
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+<script>
+  var header = $("meta[name='_csrf_header']").attr("content");
+  var token = $("meta[name='_csrf']").attr("content");
+  var quotationGrid;
+  var quotationView;
+  var quotationColums;
+
+function loadGridQuotationList(type, result) {
+  if(type == "init"){
+    quotationView = new wijmo.collections.CollectionView(result, {
+    });
+
+    quotationColums = [
+      { binding: 'itemName', header: 'Item',  width: 150 , isReadOnly:true, align:"center"},
+      { binding: 'description', header: 'Description',  width: 150 , isReadOnly:true, align:"center" },
+      { binding: 'qty', header: 'QTY',  width: 80 , isReadOnly:true, align:"center" },
+      { binding: 'amount', header: 'Unit',  width: 150 , isReadOnly:true, align:"center" },
+      { binding: 'uprice', header: 'U/PRICE',  width: 150, isReadOnly:true, align:"center"},
+      { binding: 'extendedPrice', header: 'Extended Price', width: 150 , isReadOnly:true, align:"center" },
+      { binding: 'remark', header: 'REMARK', width: 100, isReadOnly:true, align:"center"},
+    ];
+
+    quotationGrid = new wijmo.grid.FlexGrid('#quotationGrid', {
+      autoGenerateColumns: false,
+      alternatingRowStep: 0,
+      columns: quotationColums,
+      itemsSource: quotationView,
+      keyActionEnter: "MoveDown",
+      imeEnabled: true,
+      scrollPositionChanged: function(){
+        quotationGrid.select(new wijmo.grid.CellRange(quotationGrid.rows.length - 1,-1), true);
+      },
+      itemFormatter: function(p, r, c, cell) {
+        if (p.cellType == wijmo.grid.CellType.RowHeader) {
+          //cell.textContent = (r+1).toString();
+          cell.textContent = (quotationView.pageSize * quotationView.pageIndex + r + 1).toString();
+        }
+      }
+    });
+  }else{
+    quotationView = new wijmo.collections.CollectionView(result, {
+      currentItem: null
+    });
+    quotationGrid.itemsSource = quotationView;
+  }
+}
+
+function getQuotationDetail() {
+  var param = {
+    rfqQno : $('#rfqQno').val()
+  }
+
+  $.ajax({
+    url : '/buyer/getQuotationDetail',
+    dataType : null,
+    data : param,
+    success : function(result) {
+      console.log("getQuotationDetail success");
+      loadGridQuotationList('search', result);
+    },
+    error: function(request, status, error) {
+      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+    }
+  });
+}
+
+function allowQuo(){
+  if(confirm("견적을 수락하시겠습니까")) {
+  var param = {
+    rfqQno : $('#rfqQno').val()
+  }
+
+  $.ajax({
+    url : '/buyer/allowQuo',
+    dataType : null,
+    data : param,
+    success : function(result) {
+      location.href="/buyer/createPo?rfqQno=" + $('#rfqQno').val();
+    },
+    error: function(request, status, error) {
+      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+    }
+  });
+  }
+}
+
+function rejectQuo(){
+  if(confirm("견적을 거절하시겠습니까")){
+    var idxArr = new Array();
+    $('input[type=checkbox]:checked').each(function (e) {
+      var value = $(this).val();
+      idxArr.push(value);
+    })
+
+    var params = {
+      rfqQno : $('#rfqQno').val(),
+      rejectFlag : idxArr.toString(),
+      rejectTxt : $('#rejectTxt').val()
+    }
+
+    $.ajax({
+      url: "/buyer/rejectQuo"
+      , method : 'POST'
+      , data: params
+      , beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+      }
+      , success: function (response) {
+        location.href = "/buyer/allFeed"
+      }
+      , error: function (request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  }
+}
+
+
+$(document.body).ready(function() {
+  loadGridQuotationList('init');  	//그리드 초기화
+  $('#allFeed').addClass('active');
+  getQuotationDetail();
+});
+</script>
+
+</html>

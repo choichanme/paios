@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="process_wrap" th:fragment="supplierProcessFragment">
+    <div class="process_txt_wrap">
+        <p class="tit">SUPPLIER PROCESS</p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+    </div>
+
+    <div class="flex_wrap">
+        <div class="flex_box entire" id="allProc" onclick="location.href='/supplier/allDoc'">
+            <p class="step">전체</p>
+        </div>
+        <div class="flex_box" data-num="1" id="allQuo" onclick="location.href='/supplier/allQuo'">
+            <div class="icon_wrap">
+                <img src="../img/process_icon01.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+                <p class="step">STEP01</p>
+                <p class="step_txt">견적내기</p>
+            </div>
+        </div>
+        <span class="material-icons-outlined arrow">chevron_right</span>
+        <div class="flex_box" data-num="2" id="allPo" onclick="location.href='/supplier/allOrder'">
+            <div class="icon_wrap">
+                <img src="../img/process_icon02.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+                <p class="step">STEP02</p>
+                <p class="step_txt">발주</p>
+            </div>
+        </div>
+        <span class="material-icons-outlined arrow">chevron_right</span>
+        <div class="flex_box" data-num="1" id="allPay" onclick="location.href='/supplier/allPay'">
+            <div class="icon_wrap">
+                <img src="../img/process_icon04.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+                <p class="step">STEP03</p>
+                <p class="step_txt">배송ㆍ결제</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

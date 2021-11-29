@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/header :: headerFragment" ></th:block>
+
+<div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="buyer_qm_payment_invoice">
+    <div class="inner">
+      <th:block th:replace="fragment/buyer_process :: buyerProcessFragment" ></th:block>
+
+      <ul class="tab_wrap">
+        <li><a href="">P/L</a></li>
+        <li><a href="">D/O</a></li>
+        <li class="current"><a href="">INVOICE</a></li>
+      </ul>
+
+      <div class="docu_wrap">
+        <div class="docu_cont">
+          <div class="docu_section01 docu_top_section">
+            <div class="flex_wrap">
+              <img src="img/komal_logo.svg" alt="" class="logo">
+              <ul>
+                <li>#106, Hyuenheim building, GeojeJungangro 13gil,
+                  7, Geojesi, Gyeongnam, Rep. Of Korea
+                  PAIOS CORPORATION</li>
+                <li>Tel: +82 55 634 1968</li>
+                <li>http://www.paiosgroup.com</li>
+                <li>E-mail:leo@paiosgroup.com</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="docu_section02">
+            <div class="docu_tit_wrap flex_wrap bor">
+              <h2>INVOICE</h2>
+            </div>
+
+            <table class="tbl_style02 docu_table">
+              <tbody>
+                <tr>
+                  <th>Date</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+                  <th>Invoice No.</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>To</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+                  <th>Total Page</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Address</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+
+                </tr>
+                <tr>
+                  <th>Attention</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+                  <th>P/O No.</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Subject</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                    <p class="point_info">
+                      Dear Sir, Madam with regards to the subject, we are very pleased to submit our proposal as below.
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="grid_wrap">
+              그리드 영역
+            </div>
+
+            <div class="flex_wrap half">
+              <div class="flex_box">
+                <table class="tbl_style02 docu_table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <input type="text" placeholder="파이오스 담당자이름, 1-10" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="text" placeholder="CEO 파이오스 직함, 1-11" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="sign">
+                        <div class="sign_img_wrap">
+                          파이오스 직인 이미지
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="docu_section03">
+            <div class="remark">
+              <p class="tit">Remark</p>
+              <ul>
+                <li>1) Please make a remittance to :
+                  <div class="emp">
+                    <span>Bank Name : IBK (Industrial Bank of Korea)</span><br>
+                    <span>Account No : 565-060472-56-00011 / Account Name : PAIOS Corporation((주)파이오스) / Swift Code : IBKOKXX</span>
+                  </div>
+                </li>
+                <li>2) Please include this invoice number in your bank transaction.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01">완료</button>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+<script>
+  $(document.body).ready(function() {
+    $('#allPay').addClass('active');
+    // getQuotationDetail();
+  });
+</script>
+</html>

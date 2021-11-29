@@ -1,0 +1,19 @@
+<div class="list_item flex_wrap" th:each="poVo : ${poVo}">
+    <div class="box">
+        <p class="quatation_num" th:text="'Quatation Number : '+ ${poVo.rfqQno}"><span class="material-icons-outlined">content_copy</span>Quatation Number : </p>
+        <ul class="quatation_info">
+            <li th:text="'아이템 : ' + ${poVo.rfqItem}">아이템 : butterfly valve</li>
+        </ul>
+    </div>
+    <div class="box">
+        <p class="step">발주 :</p>
+        <p class="step_txt" th:if="${poVo.bPoDt} == null and  ${poVo.bPoPdf} == null">"P/O 서류를 준비해주세요."</p>
+        <p class="step_txt" th:if="${poVo.bPoYn} == 'N' and ${poVo.bPoDt} != null or ${poVo.bPoPdf} != null">"KOMAL에서 P/O를 확인중입니다."</p>
+        <p class="step_txt" th:if="${poVo.bPoYn} == 'Y'">"KOMAL에서 P/O를 확인했습니다."<br>"다음서류를 준비해주세요."</p>
+    </div>
+    <div class="box btn">
+        <button class="btn_style03" th:if="${poVo.bPoDt} == null and ${poVo.bPoPdf} == null" th:onclick="'location.href=\''+ @{'/buyer/createPo?rfqQno=' + ${poVo.rfqQno}} + '\''">P/O작성</button>
+        <button class="btn_style03" th:if="${poVo.bPoYn} == 'N' and ${poVo.bPoDt} != null or ${poVo.bPoPdf} != null" th:onclick="'location.href=\''+ @{'/buyer/viewPo?rfqQno=' + ${poVo.rfqQno}} + '\''">P/O확인</button>
+        <button class="btn_style03" th:onclick="'location.href=\''+ @{'/buyer/alldoc?rfqQno=' + ${poVo.rfqQno}} + '\''">전체 서류</button>
+    </div>
+</div>

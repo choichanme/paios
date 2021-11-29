@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>회원가입</title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+  <script>
+    var dupCheckIdFlag = false;
+
+    function register() {
+
+      //경고창 확인후 제거
+      if($('#email').hasClass("input_alert")){
+        $('#email').removeClass("input_alert");
+        $('.input_notice').removeClass("input_alert");
+        $('span').remove();
+      }
+      if($('#pwd').hasClass("input_alert")){
+        $('#pwd').removeClass("input_alert");
+        $('.input_pwd').removeClass("input_alert");
+        $('span').remove();
+      }
+      if($('#checkpwd').hasClass("input_alert")){
+        $('#checkpwd').removeClass("input_alert");
+        $('.input_chpwd').removeClass("input_alert");
+        $('span').remove();
+      }
+
+      //경고창 넣어주기
+      if($('#email').val() == ""){
+        $('#email').addClass("input_alert");
+        $('.input_notice').text("이메일을 입력해주세요.");
+        $('.input_notice').addClass("input_alert");
+        $('#email').focus();
+        return false;
+      }
+      if($('#pwd').val() == ""){
+        $('#pwd').addClass("input_alert");
+        $('.input_pwd').text("비밀번호를 입력해주세요.");
+        $('.input_pwd').addClass("input_alert");
+        $('#pwd').focus();
+        return false;
+      }
+      if($('#checkpwd').val() == ""){
+        $('#checkpwd').addClass("input_alert");
+        $('.input_chpwd').text("비밀번호를 입력해주세요.");
+        $('.input_chpwd').addClass("input_alert");
+        $('#checkpwd').focus();
+        return false;
+      }
+      if($('#pwd').val() != $('#checkpwd').val()){
+        $('#checkpwd').addClass("input_alert");
+        $('.input_chpwd').text("비밀번호가 일치하지 않습니다.");
+        $('.input_chpwd').addClass("input_alert");
+        $('#checkpwd').focus();
+        return false;
+      }
+
+
+      var idRule = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      var pwdRule = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+
+      if(!idRule.test($('#email').val())) {
+        alert("ID를 확인하시기 바랍니다. \n올바르지 않은 이메일입니다.")
+        $('#email').focus();
+        return false;
+      }else if(!pwdRule.test($('#pwd').val())) {
+        alert("비밀번호를 확인하시기 바랍니다. \n비밀번호는 영문자(대,소문자), 숫자, 특수문자를 포함하여 최소 8자 이상이어야 합니다.")
+        $('#pwd').focus();
+        return false;
+      }
+
+      if(!dupCheckIdFlag) {
+        $('#email').addClass("input_alert");
+        $('.input_notice').text("중복확인을 해주세요.");
+        $('.input_notice').addClass("input_alert");
+        return false;
+      } else {
+        $('#register').submit();
+      }
+    }
+
+    function dupCheckId() {
+      if($('#email').hasClass("input_alert")){
+        $('#email').removeClass("input_alert");
+        $('.input_notice').removeClass("input_alert");
+        $('span').remove();
+      }
+
+      if($('#email').val() == ""){
+        $('#email').addClass("input_alert");
+        $('.input_notice').text("이메일을 입력해주세요.");
+        $('.input_notice').addClass("input_alert");
+        $('#email').focus();
+        return false;
+      }
+
+      var param = {
+        email : $('#email').val()
+      }
+
+      $.ajax({
+        url : "/user/dupCheckId",
+        async : false, // 비동기모드 : true, 동기식모드 : false
+        type : 'POST',
+        cache : false,
+        dataType : 'text',
+        data : param,
+        success : function(data) {
+          if(data != ""){
+            alert('이미 존재하는 아이디입니다.');
+            dupCheckIdFlag = false;
+          }else{
+            alert('사용가능한 아이디입니다.');
+            dupCheckIdFlag = true;
+          }
+        },
+        error : function(request,status,error) {
+          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    }
+  </script>
+</head>
+
+<body>
+<th:block th:replace="fragment/header :: headerFragment" ></th:block>
+
+<div class="register bg01">
+  <div class="inner">
+    <div class="register_wrap">
+      <div class="txt_wrap">
+        <h2>회원가입</h2>
+        <p>회원님의 소중한 정보 감사드립니다.</p>
+      </div>
+
+      <div class="register_info_wrap">
+        <form id="register" th:action="@{/user/register}" method="post">
+        <div class="chk_wrap">
+          <div class="chk_item chk">
+            <input type="radio" id="chk_item_regi_buyer" name="role" value="B" class="chk_item_input" checked>
+            <label for="chk_item_regi_buyer" class="chk_item_lable"></label>
+            <h3>Buyer</h3>
+            <p>말레이시아 바이어로<br>회원가입하기</p>
+          </div>
+          <div class="chk_item">
+            <input type="radio" id="chk_item_regi_supplier" class="chk_item_input" value="S" name="role">
+            <label for="chk_item_regi_supplier" class="chk_item_lable"></label>
+            <h3>Supplier</h3>
+            <p>한국 서플라이어로<br>회원가입하기</p>
+          </div>
+          <div class="chk_item">
+            <input type="radio" id="chk_item_regi_forwarding" class="chk_item_input" value="F" name="role">
+            <label for="chk_item_regi_forwarding" class="chk_item_lable"></label>
+            <h3>Forwarding</h3>
+            <p>포워딩사로<br>회원가입하기</p>
+          </div>
+        </div>
+        <table class="tbl_style01">
+          <tr>
+            <th>이메일</th>
+            <td>
+              <div class="input_wrap">
+                <input id="email" type="text" name="email" placeholder="example@google.com"/>
+                <button type="button" class="btn_style01" onclick="dupCheckId();">중복확인</button>
+                <span class="input_notice"></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>비밀번호</th>
+            <td>
+              <div class="input_wrap">
+                <input id="pwd" type="password" name="password" placeholder="Password"/>
+                <span class="input_pwd"></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>비밀번호 확인</th>
+            <td>
+              <input id="checkpwd" type="password" placeholder="Password"/>
+              <span class="input_chpwd"></span>
+            </td>
+          </tr>
+        </table>
+        <button type="button" class="btn_style01 register_btn" onclick="register();">회원가입</button>
+        </form>
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+</body>
+
+</html>

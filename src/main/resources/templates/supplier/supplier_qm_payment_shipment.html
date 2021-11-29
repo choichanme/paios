@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+  <th:block th:replace="fragment/supplierHeader :: headerFragment" ></th:block>
+
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="supplier_qm_payment_shipment">
+    <div class="inner">
+      <th:block th:replace="fragment/supplier_process :: supplierProcessFragment" ></th:block>
+
+      <div class="btn_area_bottom">
+        <button class="btn_style01">리뷰작성하기</button>
+      </div>
+
+      <div class="shipment_check flex_wrap">
+        <div class="item">
+          <h3 class="tit">결제조회</h3>
+          <div class="txt_wrap">
+            <p class="dday">D-35</p>
+            <p class="cond">결제조건 : COD30</p>
+            <ul class="quatation_info">
+              <li>Q.no : 11111</li>
+              <li>아이템 : butterfly valve 외 4건</li>
+              <li>결제금액 : $ 50,000</li>
+              <li>계좌정보 : ㅇㅇ은행 225-54-851617 홍길동</li>
+            </ul>
+          </div>
+        </div>
+        <div class="item">
+          <h3 class="tit">배송조회</h3>
+          <div class="txt_wrap">
+            <p class="dday">D-05</p>
+            <p class="cond">무역조건 : DDP</p>
+            <ul class="quatation_info">
+              <li>Q.no : 11111</li>
+              <li>아이템 : butterfly valve 외 4건</li>
+              <li>배송주소 : 306, samsungdong - 15-94, Malaysia</li>
+              <li>배송일자 : P/O에 나온 Shipment 기입</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+
+</html>
+<script>
+  $(document.body).ready(function() {
+    $('#allPay').addClass('active');
+  });
+</script>

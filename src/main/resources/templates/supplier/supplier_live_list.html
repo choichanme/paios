@@ -1,0 +1,15 @@
+<div class="live_list flex_wrap">
+    <div class="item" th:each="rfqVo : ${rfqVo}">
+        <div class="tit">
+            <p class="date" th:text="'견적마감일 : ' + ${rfqVo.deadline}">견적마감일 : 21.08.12 </p>
+            <p class="dday" th:text="'D-' + ${rfqVo.dDay}">D-3</p>
+        </div>
+        <ul>
+            <li th:text="'Q.no : ' + ${rfqVo.rfqQno}">Q.no : 11111</li>
+            <li th:text="'아이템 : ' + ${rfqVo.rfqItem}">아이템 : oil pump, a pump, b pump, c pump</li>
+            <li th:text="'무역조건 : ' + ${rfqVo.incotermsFlag}">무역조건 : EXW</li>
+            <li th:text="'결제조건 : ' + ${rfqVo.payTermsFlag}">결제조건 : COD 30</li>
+        </ul>
+        <button class="btn_style03" th:onclick="'location.href=\'' + @{'/supplier/viewRfq?rfqQno=' + ${rfqVo.rfqQno}} + '\''">상세보기</button>
+    </div>
+</div>

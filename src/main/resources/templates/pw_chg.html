@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+  <script>
+    function chPassword() {
+
+      var params = {
+        password: $('#password').val(),
+        email : $('#email').val()
+      }
+
+      $.ajax({
+        url: "/user/chpassword",
+        async: false, // 비동기모드(화면전환 X) : true, 동기식모드 : false
+        type: 'POST',
+        cache: false,
+        data: params,
+        success: function (data) {
+          alert("비밀번호 변경이 완료되었습니다.")
+          location.href = "/user/login"
+        },
+        error: function (request, status, error) {
+          alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+        // });
+      });
+
+    }
+  </script>
+</head>
+
+
+<body>
+<th:block th:replace="fragment/header :: headerFragment" ></th:block>
+
+
+<div class="pw_chg bg01">
+    <div class="inner">
+      <div class="pw_chg_wrap">
+        <h2>패스워드 변경</h2>
+        <div class="form_wrap">
+          <p class="form_name">패스워드</p>
+          <input id="email" type="hidden" th:value="${user}" />
+          <input id="password" type="password" placeholder="" />
+        </div>
+        <div class="form_wrap">
+          <p class="form_name">패스워드확인</p>
+          <input type="password" placeholder="" />
+        </div>
+        <button type="submit" onclick="chPassword();" class="btn_style01">비밀번호 변경</button>
+      </div>
+    </div>
+  </div>
+
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+
+</html>

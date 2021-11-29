@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/header :: headerFragment" ></th:block>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="buyer_qm_po02_01">
+    <div class="inner">
+      <th:block th:replace="fragment/buyer_process :: buyerProcessFragment" ></th:block>
+
+      <div class="docu_wrap">
+        <div class="docu_btn_area_top">
+          <button class="btn_style01" onclick="submitPo();">등록하기</button>
+        </div>
+        <div class="docu_cont">
+
+          <div class="docu_section01 docu_top_section">
+            <div class="flex_wrap">
+              <img src="../img/komal_logo.svg" alt="" class="logo">
+              <ul>
+                <li th:text="${company.getCompany}">#106, Hyuenheim building, GeojeJungangro 13gil,
+                7, Geojesi, Gyeongnam, Rep. Of Korea
+                hihelloilgas COMPANY</li>
+                <li th:text="'Tel: ' + ${company.getComNum}">Tel: +82 55 634 1968</li>
+                <li th:text="${company.getComSite}">http://www.paiosgroup.com</li>
+                <li th:text="'Email: ' + ${company.getComEmail}">E-mail:leo@paiosgroup.com</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="docu_section02">
+            <div class="docu_tit_wrap flex_wrap bor">
+              <h2>PURCHASE ORDER</h2>
+              <p class="essential_tit"><span class="essential"></span> 필수항목</p>
+            </div>
+
+            <table class="tbl_style02 docu_table">
+              <tbody>
+                <tr>
+                  <th>Date</th>
+                  <td>
+                    <input id="today" type="text" placeholder="작성일자" disabled>
+                  </td>
+                  <th>Ref Q.no.</th>
+                  <td>
+                    <input id="rfqQno" th:value="${rfqQno}" type="text" placeholder="견적번호" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>To</th>
+                  <td>
+                    <input type="text" th:value="'KOMAL PLAFORM'" placeholder="파이오스 회사" disabled>
+                  </td>
+                  <th>Ref P.O.No.</th>
+                  <td>
+                    <input type="text" id="bPoNo" th:value="${poVo.getBPoNo()}" placeholder="12121211"  disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Attention</th>
+                  <td>
+                    <input type="text" th:value="${company.getMngName()}" placeholder="파이오스 담당자" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Subject</th>
+                  <td>
+                    <input type="text" th:value="${poVo.getRfqItem()}" placeholder="주요제품" disabled>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="grid_wrap">
+              <div id="poGrid"></div>
+            </div>
+
+            <table class="docu_table">
+              <tbody>
+                <tr>
+                  <th>Incoterms 2020</th>
+                  <td>
+                    <input th:value="${poVo.getIncotermsFlag()}" type="text" placeholder="" disabled>
+                  </td>
+                  <th>Name</th>
+                  <td>
+                    <input th:value="${company.getMngName()}" type="text" placeholder="" >
+                  </td>
+                </tr>
+                <tr>
+                  <th>Payment Term</th>
+                  <td>
+                    <input th:value="${poVo.getPayTermsFlag()}" type="text" placeholder="" disabled>
+                  </td>
+                  <th>Position</th>
+                  <td>
+                    <input th:value="${company.getMngPosition()}" type="text" placeholder="" >
+                  </td>
+                </tr>
+                <tr>
+                  <th>Delivery Location</th>
+                  <td>
+                    <input th:value="${poVo.getDelLoc()}" type="text" placeholder="" disabled>
+                  </td>
+                  <th>Signed by</th>
+                  <td class="sign">
+                    <button href="" class="btn_style03 modal_trigger" data-modal-link="modal01"><span class="material-icons-outlined">add</span>직인추가</button>
+                    <img id="sealUrl" class="sign_img_wrap">
+                      <span class="material-icons close">cancel</span>
+                    </img>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Shipment</th>
+                  <td>
+                    <input th:value="${poVo.getShipmentDt()}" type="text" placeholder="" disabled>
+                  </td>
+                  <th>추가요청서류</th>
+                  <td>
+                    <input type="checkbox" id="c1" name="cc" value="C/O">
+                    <label for="c1"><div class="chk_icon"></div> <span>C/O</span></label>
+
+                    <input type="checkbox" id="c2" name="cc" value="MSDS">
+                    <label for="c2"><div class="chk_icon"></div> <span>MSDS</span></label>
+
+                    <input type="checkbox" id="c3" name="cc" checked value="Customs form">
+                    <label for="c3"><div class="chk_icon"></div> <span>Customs form</span></label>
+                    <p class="point_info">※ 꼭 필요한 경우에만 체크해 주세요!</p>
+                  </td>
+                </tr>
+                <tr>
+                  <th>HS CODE</th>
+                  <td>
+                    <input id="hscode" th:value="${poVo.getSQuoHscode()}" type="text" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Remarks</th>
+                  <td>
+                    <input th:value="${poVo.getCurrencyFlag()}" type="text" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr th:if="${poVo.getIncotermsFlag()} != 'EXW'">
+                  <th>Packing</th>
+                  <td>
+                    <input id="pkinfo" th:value="${poVo.getSQuoPkinfo()}" type="text" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr th:if="${poVo.getIncotermsFlag()} != 'EXW'">
+                  <th>Quality</th>
+                  <td>
+                    To be about same as explained
+                  </td>
+                </tr>
+                <tr th:if="${poVo.getIncotermsFlag()} != 'EXW'">
+                  <th>Return</th>
+                  <td>
+                    Return is only available against defective products. Otherwise, never acceptable.
+                  </td>
+                </tr>
+                <tr>
+                  <th></th>
+                  <td colspan="3">
+                    <p class="dap" th:if="${poVo.getIncotermsFlag()} == 'DDP'">Price is Including Tax, Duty and K1</p>
+                    <p class="ddp" th:if="${poVo.getIncotermsFlag()} == 'DAP'">Price is not Including Tax, Duty and K1</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01" onclick="submitPo();">등록하기</button>
+        </div>
+
+      </div>
+
+      <!-- 모달창 -->
+      <div class="modal modal01">
+        <div class="modal_bg"></div>
+        <div class="modal_cont sign_regi">
+          <span class="material-icons-outlined close" onclick="closeModal()">close</span>
+          <h3>직인등록</h3>
+          <div class="flex_wrap">
+            <div class="flex_box sign">
+              <div class="file_input">
+                <input type="file" id="sign_file" name="sign_file">
+                <div class="btn">Choose</div>
+                <p id="file_name" data-js-label="">No file selected</p>
+              </div>
+              <img id="sign_viewer" class="img_viewer" />
+            </div>
+            <div class="flex_box conf">
+              <div class="form_wrap">
+                <p class="form_name">Email</p>
+                <div class="input_wrap">
+                  <input id="email" type="text" th:value="${company.getComEmail()}" placeholder="Email" disabled>
+                  <button type="button" class="btn_style01" onclick="sendReqEmail()">인증요청</button>
+                </div>
+              </div>
+              <div class="form_wrap">
+                <p class="form_name">인증번호</p>
+                <div class="input_wrap">
+                  <input id="certNum" type="text" placeholder="01012345678"/>
+                  <button type="button" class="btn_style01" onclick="checkCert()">인증</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn_style01 bottom" onclick="registSeal()">등록</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+<script>
+  var header = $("meta[name='_csrf_header']").attr("content");
+  var token = $("meta[name='_csrf']").attr("content");
+  var poGrid;
+  var poView;
+  var poColums;
+  var certificationCheck = false;
+
+  function loadGridPoList(type, result) {
+    if(type == "init"){
+      poView = new wijmo.collections.CollectionView(result, {
+      });
+
+      poColums = [
+        { binding: 'itemName', header: 'Item',  width: 150 , isReadOnly:true, align:"center"},
+        { binding: 'description', header: 'Description',  width: 150 , isReadOnly:true, align:"center" },
+        { binding: 'qty', header: 'QTY',  width: 80 , isReadOnly:true, align:"center" },
+        { binding: 'amount', header: 'Unit',  width: 150 , isReadOnly:true, align:"center" },
+        { binding: 'uprice', header: 'U/PRICE',  width: 150, isReadOnly:true, align:"center"},
+        { binding: 'extendedPrice', header: 'Extended Price', width: 150 , isReadOnly:true, align:"center" },
+        { binding: 'remark', header: 'REMARK', width: 100, isReadOnly:true, align:"center"},
+      ];
+
+      poGrid = new wijmo.grid.FlexGrid('#poGrid', {
+        autoGenerateColumns: false,
+        alternatingRowStep: 0,
+        columns: poColums,
+        itemsSource: poView,
+        keyActionEnter: "MoveDown",
+        imeEnabled: true,
+        scrollPositionChanged: function(){
+          poGrid.select(new wijmo.grid.CellRange(poGrid.rows.length - 1,-1), true);
+        },
+        itemFormatter: function(p, r, c, cell) {
+          if (p.cellType == wijmo.grid.CellType.RowHeader) {
+            //cell.textContent = (r+1).toString();
+            cell.textContent = (poView.pageSize * poView.pageIndex + r + 1).toString();
+          }
+        }
+      });
+      poGrid.columnFooters.rows.push(new wijmo.grid.Row());
+      poGrid.bottomLeftCells.setCellData(0,0,'Σ');
+
+    }else{
+      poView = new wijmo.collections.CollectionView(result, {
+        currentItem: null
+      });
+      poGrid.itemsSource = poView;
+    }
+  }
+
+  function getQuotationDetail() {
+    var param = {
+      rfqQno : $('#rfqQno').val()
+    }
+
+    $.ajax({
+      url : '/buyer/getQuotationDetail',
+      dataType : null,
+      data : param,
+      success : function(result) {
+        console.log("getQuotationDetail success");
+        loadGridPoList('search', result);
+      },
+      error: function(request, status, error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+      }
+    });
+  }
+
+  function handleImgFileSelect(e) {
+    var files = e.target.files;
+    var filesArr = Array.prototype.slice.call(files);
+    var maxSize = 3500000;
+    var size = e.target.files[0].size;
+
+    var reg = /(.*?)\/(jpg|jpeg|png)$/;
+
+    filesArr.forEach(function(f) {
+      if(!f.type.match(reg)) {
+        alert("확장자는 이미지 확장자만 가능합니다");
+        $('#sign_file').val("");
+        $('#file_name').text("No file selected");
+        return ;
+      }
+      if(size > maxSize){
+        alert("이미지 사이즈는 3MB 초과할수 없습니다.");
+        $('#sign_file').val("");
+        $('#file_name').text("No file selected");
+        $("#sign_viewer").attr("src", "");
+        return ;
+      }
+
+      sel_file = f;
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $("#sign_viewer").attr("src", e.target.result);
+      }
+      reader.readAsDataURL(f);
+    })
+
+  }
+
+  function closeModal() {
+    $('#sign_file').val("");
+    $('#file_name').text("No file selected");
+    $('#sign_viewer').attr("src", "");
+    certificationCheck = false;
+  }
+
+  function sendReqEmail() {
+
+    $.ajax({
+      url : "/buyer/certemail",
+      success : function(data) {
+        alert("인증번호를 메일로 전송했습니다.");
+      },
+      error : function(request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+
+    }
+
+  function checkCert() {
+    param = {
+      certNum : $('#certNum').val()
+    }
+
+    $.ajax({
+      url : "/buyer/checkCert",
+      async : true, // 비동기모드 : true, 동기식모드 : false
+      cache : false,
+      dataType : 'text',
+      data : param,
+      success : function(data) {
+        if(data == 1){
+          alert("인증되었습니다.");
+          certificationCheck = true;
+        }else {
+          alert("인증번호가 올바르지 않습니다.");
+          certificationCheck = false;
+        }
+      },
+      error : function(request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  }
+
+  function registSeal() {
+    if($('#sign_file').val() == "" || $('#sign_file').val() == null){
+      alert("직인 이미지를 등록해주세요.");
+      return false;
+    }
+    if(!certificationCheck) {
+      alert("인증이 완료되지 않았습니다.");
+      return false;
+    }else{
+      console.log($("#sign_file")[0].files[0]);
+      var form = new FormData();
+      form.append("image", $("#sign_file")[0].files[0]);
+
+      $.ajax({
+        url: "/buyer/uploadSeal"
+        , method : 'POST'
+        , processData: false
+        , enctype : 'multipart/form-data'
+        , contentType: false
+        , data: form
+        , beforeSend: function(xhr){
+          xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+        }
+        , success: function (response) {
+          alert("확인");
+          console.log(response);
+          $('#sealUrl').attr("src", response);
+          closeModal();
+        }
+        , error: function (request,status,error) {
+          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    }
+  }
+
+  function submitPo() {
+    var item = poGrid.rows;
+    var params;
+    var rows = [];
+    var idxArr = new Array();
+      $('input[type=checkbox]:checked').each(function (e) {
+        var value = $(this).val();
+        idxArr.push(value);
+      })
+
+    var param = {
+      rfqQno : $('#rfqQno').val(),
+      bPoDt: $('#today').val(),
+      bPoHscode: $('#hscode').val(),
+      bPoPkinfo: $('#pkinfo').val(),
+      sealUrl: $('#sealUrl').attr("src"),
+      addDoc: idxArr.toString()
+    }
+
+    for(var i=0; i < item.length; i++) {
+        params = {
+          poNo : $('#bPoNo').val(),
+          itemName : poGrid.collectionView.items[i].itemName,
+          description : poGrid.collectionView.items[i].description,
+          qty : poGrid.collectionView.items[i].qty,
+          uprice : poGrid.collectionView.items[i].uprice,
+          extendedPrice : poGrid.collectionView.items[i].extendedPrice,
+          remark : poGrid.collectionView.items[i].remark
+        }
+        rows.push(params);
+    }
+
+    $.ajax({
+      url: "/buyer/submitPo"
+      , method : 'POST'
+      , data: param
+      , beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+      }
+      , success: function (response) {
+        $.ajax({
+          url: "/buyer/savePoInfo"
+          , type : 'POST'
+          , contentType: 'application/json'
+          , data : JSON.stringify(rows)
+          , beforeSend: function(xhr){
+            xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+          }
+          , success: function (response) {
+            alert("저장되었습니다.");
+          }
+          , error: function (request,status,error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+        });
+      }
+      , error: function (request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  }
+
+  //현재날짜 입력
+  function CurDateInit() {
+    var now = new Date();
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
+      "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+
+    var nYear = now.getFullYear();
+    var nMonth = now.getMonth()+1;
+    var nDay = now.getDate();
+
+    if(nMonth < 10)
+      nMonth = "0" + nMonth;
+    if(nDay < 10)
+      nDay = "0" + nDay;
+
+    $('#today').val(nDay + "th," + monthNames[nMonth] + " " + nYear);
+  }
+
+  $(document.body).ready(function() {
+    $('#allPo').addClass('active');
+    $('#sign_file').on("change", handleImgFileSelect);
+    CurDateInit();
+    loadGridPoList('init');  	//그리드 초기화
+    getQuotationDetail();
+  });
+</script>
+</html>

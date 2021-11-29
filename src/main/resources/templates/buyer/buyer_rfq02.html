@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/header :: headerFragment" ></th:block>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>RFQ</span> 등록</p>
+        <p class="txt">Buyer 자사 양식</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="buyer_rfq02">
+    <div class="inner">
+      <th:block th:replace="fragment/buyer_process :: buyerProcessFragment" ></th:block>
+
+      <div class="docu_wrap">
+        <div class="docu_btn_area_top">
+          <button class="btn_style01">등록하기</button>
+        </div>
+
+        <div class="docu_cont">
+          <div class="docu_section01">
+
+            <div class="docu_tit_wrap">
+              <h3>파일 업로드 (자사 양식)</h3>
+            </div>
+            <div class='file_input'>
+              <input type="file" id="pdf">
+              <input id="rfqno" type="hidden" th:value="${rfqno}">
+              <div class="btn">Choose</div>
+              <p id="file_name" data-js-label>No file selected</p>
+            </div>
+            <p class="point_info">.pdf 파일로 업로드 해주세요.</p>
+
+            <div class="dash_line"></div>
+
+            <div class="docu_tit_wrap">
+              <h3><span class="material-icons-outlined">business</span>Company Information</h3>
+              <p class="docu_tit_subtxt">This is the information you enter at the time of initial creation. After that, it will be automatically filled out when creating RFQ and can be modified in my information.</p>
+            </div>
+            <table class="docu_table">
+              <tbody>
+                <tr>
+                  <th>Company Name<span class="essential"></span></th>
+                  <td>
+                    <input id="company" type="text" placeholder="1-4, EXW" th:value="${company.getCompany}">
+                    <span id="companyvalid"></span>
+                    <p class="point_info">You can receive contract information by email.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Company Address<span class="essential"></span></th>
+                  <td>
+                    <input id="address" type="text" placeholder="" th:value="${company.getComAddr}">
+                    <span id="addressvalid"></span>
+                  </td>
+                  <th>Website</th>
+                  <td>
+                    <input id="website" type="text" placeholder="" th:value="${company.getComSite}">
+                  </td>
+                </tr>
+                <tr>
+                  <th>Company Phone Number<span class="essential"></span></th>
+                  <td>
+                    <input id="cellnum" type="text" placeholder="" th:value="${company.getComNum}">
+                    <span id="cellnumvalid"></span>
+                  </td>
+                  <th>Email<span class="essential"></span></th>
+                  <td>
+                    <input id="email" type="text" placeholder="" th:value="${company.getComEmail}">
+                    <span id="emailvalid"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>CEO Name</th>
+                  <td>
+                    <input id="ceoname" type="text" th:value="${company.getCeoName}">
+                    <span id="ceonamevalid"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Name (Incharge Person)</th>
+                  <td>
+                    <div class="input_wrap">
+                      <input id="name" type="text" placeholder="" th:value="${company.getMngName}" >
+                      <span id="namevalid"></span>
+                    </div>
+                  </td>
+                  <th>Position</th>
+                  <td>
+                    <input id="position" type="text" placeholder="" th:value="${company.getMngPosition}">
+                  </td>
+                </tr>
+                <tr>
+                  <th>Contact Point</th>
+                  <td>
+                    <input id="mngnum" type="text" placeholder="" th:value="${company.getMngNum}">
+                    <span id="mngnumvalid"></span>
+                    <p class="point_info">You can receive WHATSAPP notification talk service when you fill it out.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01">등록하기</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+  <script>
+    $.getScript('/js/buyer/buyer_rfq02.js');
+    $(document.body).ready(function() {
+      $('#allRfq').addClass('active');
+      $('#pdf').change(function (e){
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+        var size = e.target.files[0].size;
+
+        var reg = /(.*?)\/(pdf)$/;
+
+        filesArr.forEach(function (f) {
+          if(!f.type.match(reg)) {
+            alert("PDF파일만 업로드 가능합니다.");
+            $('#pdf').val("");
+            $('#file_name').text("No file selected");
+          }
+        })
+      });
+    })
+  </script>
+</body>
+
+</html>

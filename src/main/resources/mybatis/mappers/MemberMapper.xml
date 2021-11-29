@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.paios.Mapper.MemberMapper">
+    <select id="findByEmail" resultType="MemberVo">
+        select * from web.user
+        where email = #{email}
+    </select>
+
+    <select id="findId" parameterType="hashMap" resultType="String">
+        select email from web.user
+        where email = #{email}
+    </select>
+
+    <insert id="joinMember" parameterType="hashMap">
+        INSERT INTO web.user
+        (password
+        , email
+        , role
+        , ch_pw_yn
+        )VALUES(
+            #{password},
+            #{email},
+            #{role},
+            'N'
+               )
+    </insert>
+
+    <update id="updateCert" parameterType="MemberVo">
+        update web.user
+        set ch_pw_yn = #{chPwYn},
+            cert_num = #{certNum}
+        where email = #{email}
+    </update>
+
+    <select id="certNum" parameterType="MemberVo" resultType="Integer">
+        select count(*) from web.user
+        where 1=1
+        and email = #{email}
+        and cert_num = #{certNum}
+    </select>
+
+    <update id="chPassword" parameterType="MemberVo">
+        update web.user
+        set password = #{password}
+        where email = #{email}
+    </update>
+
+    <insert id="saveCompany" parameterType="CompanyVo">
+        insert into web.user_tb
+        (
+            user_tb_index,
+            user_id,
+            company,
+            com_num,
+            com_addr,
+            com_email,
+            com_site,
+            mng_num,
+            mng_name,
+            mng_position,
+            com_regnum
+        )values
+        (
+            (select coalesce(max(user_tb_index)+1,1) from web.user_tb),
+            #{userId},
+            #{company},
+            #{comNum},
+            #{comAddr},
+            #{comEmail},
+            #{comSite},
+            #{mngNum},
+            #{mngName},
+            #{mngPosition},
+            #{comRegnum}
+        )ON CONFLICT(user_id)
+        DO UPDATE SET
+            company = #{company},
+            com_num = #{comNum},
+            com_addr = #{comAddr},
+            com_email = #{comEmail},
+            com_site = #{comSite},
+            mng_num = #{mngNum},
+            mng_name = #{mngName},
+            mng_position = #{mngPosition},
+            com_regnum = #{comRegnum}
+    </insert>
+
+    <select id="disCompanyInfo" parameterType="String" resultType="CompanyVo">
+        select company, com_addr, com_site, mng_num, mng_name, mng_position, com_site, com_num, com_email, ceo_name, cert_num, com_regnum, user_bank_name, user_account, user_acname
+        from web.user_tb
+        where 1=1
+        and user_id = #{userId}
+    </select>
+</mapper>

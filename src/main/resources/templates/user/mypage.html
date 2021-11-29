@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="utf-8">
+  <title>마이페이지</title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+  <script>
+    function chPassword() {
+
+      var params = {
+        password: $('#password').val(),
+        email : $('#email').html()
+      }
+
+      $.ajax({
+        url: "/user/chpassword",
+        async: false, // 비동기모드(화면전환 X) : true, 동기식모드 : false
+        type: 'POST',
+        cache: false,
+        data: params,
+        success: function (data) {
+          alert("비밀번호 변경이 완료되었습니다.")
+          $('.mypage .btn_close').click();
+        },
+        error: function (request, status, error) {
+          alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+        // });
+      });
+
+    }
+
+    function saveCompany() {
+      var params = {
+        company : $('#company').val(),
+        address : $('#address').val(),
+        website : $('#website').val(),
+        cellnum : $('#cellnum').val(),
+        email : $('#comemail').val(),
+        ceoname : $('#ceoname').val(),
+        name : $('#name').val(),
+        position : $('#position').val(),
+        mngnum : $('#mngnum').val()
+      }
+
+      $.ajax({
+        url : "/user/savecompany",
+        async : false, // 비동기모드 : true, 동기식모드 : false
+        cache : false,
+        dataType : 'text',
+        data : params,
+        success : function(data) {
+          alert("변경이 완료되었습니다.")
+          $('.btn_close').click();
+        },
+        error : function(request,status,error) {
+          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    }
+  </script>
+
+</head>
+
+<body>
+  <th:block th:replace="fragment/header :: headerFragment" ></th:block>
+
+  <div class="mypage bg01">
+    <div class="inner">
+      <div class="mypage_wrap">
+        <h2>My page</h2>
+        <table class="tbl_style01">
+          <tr>
+            <th>이메일</th>
+            <td id="email" sec:authentication="name">ctns@myctns.com</td>
+          </tr>
+          <tr>
+            <th>기업정보</th>
+            <td><button class="btn_style01 company_chg_btn">수정</button></td>
+          </tr>
+          <tr>
+            <th>비밀번호</th>
+            <td><button class="btn_style01 pw_chg_btn">변경</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="company_chg">
+        <a href="#" class="btn_close"><span class="material-icons-outlined">close</span></a>
+        <h2>기업정보 수정</h2>
+        <p class="essential_tit"><span class="essential">*</span> 필수항목</p>
+        <table class="tbl_style01">
+          <tr>
+            <th>기업명<span class="essential">*</span></th>
+            <td><input id="company" type="text" placeholder="" th:value="${company.getCompany}"/></td>
+          </tr>
+          <tr>
+            <th>주소<span class="essential">*</span></th>
+            <td><input id="address" type="text" placeholder="" th:value="${company.getComAddr}"/></td>
+          </tr>
+          <tr>
+            <th>전화번호<span class="essential">*</span></th>
+            <td><input id="cellnum" type="text" placeholder="" th:value="${company.getComNum}"/></td>
+          </tr>
+          <tr>
+            <th>이메일<span class="essential">*</span></th>
+            <td><input id="comemail" type="text" placeholder="" th:value="${company.getComEmail}"/></td>
+          </tr>
+          <tr>
+            <th>대표자명<span class="essential">*</span></th>
+            <td><input id="ceoname" type="text" placeholder="" th:value="${company.getCeoName}"/></td>
+          </tr>
+          <tr>
+            <th>담당자명<span class="essential">*</span></th>
+            <td><input id="name" type="text" placeholder="" th:value="${company.getMngName}"/></td>
+          </tr>
+          <tr>
+            <th>담당자 포지션</th>
+            <td><input id="position" type="text" placeholder="" th:value="${company.getMngPosition}"/></td>
+          </tr>
+          <tr>
+            <th>담당자 전화번호<span class="essential">*</span></th>
+            <td><input id="mngnum" type="text" placeholder="" th:value="${company.getMngNum}"/></td>
+          </tr>
+          <tr>
+            <th>웹사이트</th>
+            <td><input id="website" type="text" placeholder="" th:value="${company.getComSite}"/></td>
+          </tr>
+        </table>
+        <div class="btn_wrap">
+          <button class="btn_style01 cancel">취소</button>
+          <button class="btn_style01" onclick="saveCompany();">변경</button>
+        </div>
+      </div>
+
+      <div class="pw_chg">
+        <a href="#" class="btn_close"><span class="material-icons-outlined">close</span></a>
+        <h2>비밀번호 변경</h2>
+        <table class="tbl_style01">
+          <tr>
+            <th>새 비밀번호</th>
+            <td><input id="password" type="password" placeholder=""/></td>
+          </tr>
+          <tr>
+            <th>새 비밀번호 확인</th>
+            <td><input type="password" placeholder=""/></td>
+          </tr>
+        </table>
+        <div class="btn_wrap">
+          <button class="btn_style01 cancel">취소</button>
+          <button class="btn_style01" onclick="chPassword();">변경</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+</html>

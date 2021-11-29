@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/supplierHeader :: headerFragment" ></th:block>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">KOMAL 양식 혹은 자사 양식으로 RFQ를 등록하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="supplier_qm_payment_rfq">
+    <div class="inner">
+      <th:block th:replace="fragment/supplier_process :: supplierProcessFragment" ></th:block>
+
+      <div class="chk_wrap">
+        <div class="chk_item chk">
+          <span class="material-icons-outlined chk_item_icon">sticky_note_2</span>
+          <h3>KOMAL 양식 견적서 등록</h3>
+          <p class="txt">Excel 파일 대신 KOMAL web에서 수기로 작성하세요!</p>
+          <p class="exm">예시</p>
+          <div class="img_wrap">
+
+          </div>
+          <button class="btn_style01" th:onclick="'location.href=\''+ @{'/supplier/komalPay?rfqQno=' + ${rfqQno}} + '\''">작성하러가기</button>
+        </div>
+        <div class="chk_item">
+          <span class="material-icons-outlined chk_item_icon">picture_as_pdf</span>
+          <h3>Supplier 자사 양식 견적서 등록</h3>
+          <p class="txt">자사 양식을 PDF 파일로 업로드하세요!</p>
+          <!-- <p class="exm">서류 업로드</p>
+
+          <div class='file_input'>
+            <input type='file'>
+            <div class="btn">Choose</div>
+            <p data-js-label>No file selected</p>
+          </div> -->
+
+          <button class="btn_style01" th:onclick="'location.href=\''+ @{'/supplier/ownPay?rfqQno=' + ${rfqQno}} + '\''">작성하러가기</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+  <script>
+    $('.chk_item').click(function() {
+      $('.chk_item').removeClass('chk');
+      $(this).addClass('chk');
+      $('#allPay').addClass('active');
+    });
+  </script>
+</body>
+
+</html>

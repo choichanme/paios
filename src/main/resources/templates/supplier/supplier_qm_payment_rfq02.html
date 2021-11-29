@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/supplierHeader :: headerFragment" ></th:block>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">KOMAL 양식 혹은 자사 양식으로 RFQ를 등록하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="supplier_qm_payment_rfq02">
+    <div class="inner">
+      <th:block th:replace="fragment/supplier_process :: supplierProcessFragment" ></th:block>
+
+
+      <div class="docu_wrap">
+        <div class="docu_btn_area_top">
+          <button class="btn_style01">등록하기</button>
+        </div>
+
+        <div class="docu_cont">
+
+          <div class="docu_tit_wrap">
+            <h3>파일 업로드 (자사 양식)</h3>
+          </div>
+
+          <div class="flex_wrap">
+            <div class="flex_box">
+              <h5>Packing List</h5>
+              <div class='file_input'>
+                <input type='file'>
+                <div class="btn">Choose</div>
+                <p data-js-label>No file selected</p>
+              </div>
+              <p class="point_info">.pdf 파일로 업로드 해주세요.</p>
+
+              <div class="docu_viewer"></div>
+            </div>
+            <div class="flex_box">
+              <h5>Invoice</h5>
+              <div class='file_input'>
+                <input type='file'>
+                <div class="btn">Choose</div>
+                <p data-js-label>No file selected</p>
+              </div>
+              <p class="point_info">.pdf 파일로 업로드 해주세요.</p>
+
+              <div class="docu_viewer"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01">등록하기</button>
+        </div>
+
+      </div>
+
+
+
+    </div>
+  </div>
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+
+</body>
+
+</html>

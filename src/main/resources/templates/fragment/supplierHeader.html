@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+<header class="header" th:fragment="headerFragment">
+    <div class="inner">
+        <a th:href="@{/supplier/main}" class="logo"></a>
+
+        <div class="menu_wrap">
+            <ul class="menu01">
+                <li><a href="">이용방법</a></li>
+                <li><a href="">이용후기</a></li>
+            </ul>
+
+            <div class="menu02">
+                <a class="">SUPPLIER</a>
+                <span class="material-icons-outlined">arrow_drop_down</span>
+                <ul>
+                    <li><a href="/supplier/main">SUPPLIER</a></li>
+                    <li><a href="/">BUYER</a></li>
+                    <li><a href="/forward/main">FORWARDING</a></li>
+                </ul>
+            </div>
+
+            <ul class="cust_menu">
+                <li><a sec:authorize="isAnonymous()" th:href="@{/login}">LOGIN</a></li>
+                <li><a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">LOGOUT</a></li>
+                <li><a sec:authorize="isAuthenticated()" th:href="@{/user/supplier/mypage}">MYPAGE</a></li>
+            </ul>
+        </div>
+
+    </div>
+</header>
+</body>

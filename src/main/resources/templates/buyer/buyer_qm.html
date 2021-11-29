@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/header :: headerFragment" ></th:block>
+
+<div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>RFQ</span> 등록</p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="buyer_qm">
+    <div class="inner">
+      <th:block th:replace="fragment/buyer_process :: buyerProcessFragment" ></th:block>
+      <!-- RFQ가 없을때 -->
+      <!-- <div class="cont_wrap nodata">
+        <p>확인 가능한 RFQ가 없습니다. RFQ를 등록해주세요.</p>
+        <button class="btn_style01">RFQ 등록하기</button>
+      </div> -->
+
+      <!-- 리스트 있을 때 -->
+      <div class="cont_wrap">
+        <div class="date_check">
+          <span class="txt">조회기간</span>
+          <input id="searchDtFr"><span class="to">-</span><input id="searchDtTo">
+          <button class="btn_style01 mar_left">조회</button>
+          <select name="" id="" class="mar_left">
+            <option value="">진행중</option>
+            <option value="">완료</option>
+          </select>
+        </div>
+
+        <div class="docu_wrap">
+          <div class="docu_btn_area_top">
+            <select name="" id="list_select" class="list_select">
+              <option value="5" selected>5개</option>
+              <option value="10">10개</option>
+              <option value="20">20개</option>
+              <option value="50">50개</option>
+            </select>
+          </div>
+
+          <div class="list" id="list">
+          </div>
+
+          <div id="paginationWrap">
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+<script>
+  var sdat = new wijmo.input.InputDate("#searchDtFr");
+  var edat = new wijmo.input.InputDate("#searchDtTo");
+
+  var srcDatInit = function(){
+    var now = new Date();
+
+    var nYear = now.getFullYear();
+    var nMonth = now.getMonth()+1;
+    var nDay = now.getDate();
+
+    var past = new Date(Date.parse(now) - 30 * 1000 * 60 * 60 * 24);
+
+    var pYear = past.getFullYear();
+    var pMonth = past.getMonth()+1;
+    var pDay = past.getDate();
+
+    if(nMonth < 10)
+      nMonth = "0" + nMonth;
+    if(pMonth < 10)
+      pMonth = "0" + pMonth;
+
+    if(nDay < 10)
+      nDay = "0" + nDay;
+    if(pDay < 10)
+      pDay = "0" + pDay;
+
+    sdat.isRequired = false;
+    sdat.value = pYear + "-" + pMonth + "-" + pDay;	//주석처리할경우 오늘날짜 자동으로 박힘.
+    sdat.format = "yyyy-MM-dd";
+
+    edat.isRequired = false;
+    edat.value = nYear + "-" + nMonth + "-" + nDay;
+    edat.format = "yyyy-MM-dd";
+  }
+
+  function getRfq() {
+    var parmas = {
+      searchDtTo : wijmo.Globalize.format(edat.value,'yyyy-MM-dd')
+      , searchDtFr : wijmo.Globalize.format(sdat.value,'yyyy-MM-dd')
+    }
+
+    $.ajax({
+      url : '/buyer/getAll',
+      dataType : null,
+      data : parmas,
+      success : function(result) {
+        if(result != null) {
+          $.each(result,function (index, vo){
+            rederList(false, vo);
+          })
+        }
+      },
+      error: function(request, status, error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+      }
+    });
+
+    let rederList = function (mode, vo) {
+      let html = "<div class='list_item flex_wrap'>"
+              + "<div class='box'>"
+              + "<p class='quatation_num'><span class='material-icons-outlined'>content_copy</span>Quatation Number : " + vo.rfqQno + "</p>"
+              + "<ul class='quatation_info'>"
+              + "<li>아이템 : " + vo.rfqItem + "</li>"
+              + "</ul>"
+              + "</div>"
+              + "<div class='box'>"
+              + "<p class='step'>RFQ 등록 :</p>"
+      if(vo.inspectYn == 'N') {
+        html += "<p class='step_txt'>KOMAL 검수 중입니다.</p>"
+                + "</div>"
+                + "<div class='box btn'>"
+                + "<button class='btn_style03' onclick='location.href=`/buyer/alldoc?rfqQno=" + vo.rfqQno + "`'>전체 서류</button>"
+                + "</div>"
+      }else{
+        html += "<p class='step_txt'>KOMAL 검수 완료되었습니다.</p>"
+                + "</div>"
+                + "<div class='box btn'>"
+                + "<button class='btn_style03'>전체 서류</button>"
+                + "</div>"
+      }
+      + "</div>"
+      if(mode){
+        $(".list").prepend(html);
+      }
+      else{
+        $(".list").append(html);
+      }
+    }
+  }
+
+  $(document.body).ready(function() {
+    srcDatInit();
+    getRfq();
+    $('#allProc').addClass('active');
+  })
+
+</script>
+
+</html>

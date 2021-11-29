@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/supplierHeader :: headerFragment" ></th:block>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="buyer_qm_payment_pl">
+    <div class="inner">
+      <th:block th:replace="fragment/supplier_process :: supplierProcessFragment" ></th:block>
+
+      <div class="docu_cont account">
+        <div class="docu_tit_wrap flex_wrap">
+          <h3>계좌정보 입력</h3>
+        </div>
+        <table class="tbl_style01 docu_table">
+          <tbody>
+            <tr>
+              <th>계좌번호</th>
+              <td>
+                <input type="text" placeholder="1-3" class="input_alert" th:value="${company.getUserAccount()}" disabled>
+              </td>
+            </tr>
+            <tr>
+              <th>은행명</th>
+              <td>
+                <input type="text" placeholder="" th:value="${company.getUserBankName()}" disabled>
+              </td>
+
+              <th>예금주</th>
+              <td>
+                <input type="text" placeholder="" th:value="${company.getUserAcname()}" disabled>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+<!--      <ul class="tab_wrap">-->
+<!--        <li class="current"><a href="">P/L</a></li>-->
+<!--        <li><a href="">INVOICE</a></li>-->
+<!--      </ul>-->
+  <div id="theTabPanel">
+    <div>
+      <a>P/L</a>
+      <div class="docu_wrap" id="pl">
+        <div class="docu_cont">
+
+          <div class="docu_section01 docu_top_section">
+            <div class="flex_wrap">
+              <img src="../img/komal_logo.svg" alt="" class="logo">
+              <ul>
+                <li th:text="${company.getCompany}">#106, Hyuenheim building, GeojeJungangro 13gil,
+                  7, Geojesi, Gyeongnam, Rep. Of Korea
+                  PAIOS CORPORATION
+                <li th:text="'Tel: ' + ${company.getComNum}">Tel: +82 55 634 1968</li>
+                <li th:text="${company.getComSite}">http://www.paiosgroup.com</li>
+                <li th:text="'Email: ' + ${company.getComEmail}">E-mail:leo@paiosgroup.com</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="docu_section02">
+            <div class="docu_tit_wrap flex_wrap bor">
+              <h2>PACKING LIST</h2>
+            </div>
+
+            <table class="tbl_style02 docu_table">
+              <tbody>
+                <tr>
+                  <th>Date</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getRfqDt()}" disabled>
+                  </td>
+                  <th>Ref Q.no.</th>
+                  <td>
+                    <input type="text" id="pl_rfqQno" placeholder="" th:value="${poVo.getRfqQno()}" disabled >
+                  </td>
+                </tr>
+                <tr>
+                  <th>To</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getRfqTo()}" disabled>
+                  </td>
+                  <th>Ref P.O.No.</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getKPoNo()}" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Attention</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getRfqAttention()}" disabled>
+                  </td>
+                  <th>HS CODE</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getSQuoHscode()}" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Subject</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getRfqItem()}" disabled>
+                    <p class="point_info">
+                      Dear Sir, Madam with regards to the subject, we are very pleased to submit our proposal as below.
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="grid_wrap">
+              <div id="plGrid">
+              </div>
+            </div>
+
+            <div class="flex_wrap half">
+              <div class="flex_box">
+                <table class="tbl_style02 docu_table">
+                  <tbody>
+                    <tr>
+                      <th colspan="2">
+                        <p class="company_name">Signed for and on behalf of <br><span th:text="${company.getCompany()}"></span></p>
+                      </th>
+                    </tr>
+                    <tr>
+                      <th>Signed by</th>
+                      <td class="sign">
+                        <div class="sign_img_wrap">
+                          <img class="sign_img_wrap" th:src="${poVo.getSealUrl()}">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Name</th>
+                      <td>
+                        <input type="text" placeholder="" th:value="${company.getMngName()}" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Position</th>
+                      <td>
+                        <input type="text" placeholder="" th:value="${company.getMngPosition()}" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Date</th>
+                      <td>
+                        <input type="text" placeholder="" id="supplierDt">
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Many thanks,</th>
+                      <td>
+                        <input type="text" th:value="${company.getCompany()}" placeholder="" disabled>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="flex_box">
+                <table class="tbl_style02 docu_table">
+                  <tbody>
+                    <tr>
+                      <th colspan="2">
+                        <p class="company_name">Signed for and on behalf of <br>PAIOS CORPORATION</p>
+                      </th>
+                    </tr>
+                    <tr>
+                      <th>Signed by</th>
+                      <td class="sign">
+                        <div class="sign_img_wrap">
+                          <img class="sign_img_wrap">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Name</th>
+                      <td>
+                        <input type="text" placeholder="Leo Park" th:value="'Leo Park'" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Position</th>
+                      <td>
+                        <input type="text" placeholder="CEO" th:value="CEO" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Date</th>
+                      <td>
+                        <input type="text" placeholder="" id="komalDt" disabled>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01" onclick="registPl();">임시저장</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <a>INVOICE</a>
+      <div class="docu_wrap" id="invoice">
+        <div class="docu_cont">
+          <div class="docu_section01 docu_top_section">
+            <div class="flex_wrap">
+              <img src="../img/komal_logo.svg" alt="" class="logo">
+              <ul>
+                <li th:text="${company.getCompany}">#106, Hyuenheim building, GeojeJungangro 13gil,
+                  7, Geojesi, Gyeongnam, Rep. Of Korea
+                  PAIOS CORPORATION
+                <li th:text="'Tel: ' + ${company.getComNum}">Tel: +82 55 634 1968</li>
+                <li th:text="${company.getComSite}">http://www.paiosgroup.com</li>
+                <li th:text="'Email: ' + ${company.getComEmail}">E-mail:leo@paiosgroup.com</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="docu_section02">
+            <div class="docu_tit_wrap flex_wrap bor">
+              <h2>INVOICE</h2>
+            </div>
+
+            <table class="tbl_style02 docu_table">
+              <tbody>
+              <tr>
+                <th>Date</th>
+                <td>
+                  <input id="invoiceDt" type="text" placeholder="" disabled>
+                </td>
+                <th>Invoice No.</th>
+                <td>
+                  <input type="text" placeholder="" disabled>
+                </td>
+              </tr>
+              <tr>
+                <th>To</th>
+                <td>
+                  <input type="text" placeholder="" th:value="'PAIOS CORPORATION'" disabled>
+                </td>
+              </tr>
+              <tr>
+                <th>Address</th>
+                <td>
+                  <input type="text" placeholder="" th:value="'Hyuenheim building, GeojeJungangro 13gil, 7, Geojesi, Gyeongnam, Rep. Of Korea PAIOS CORPORATION'" disabled>
+                </td>
+<!--                <th>Total Page</th>-->
+<!--                <td>-->
+<!--                  <input type="text" placeholder="" disabled>-->
+<!--                </td>-->
+              </tr>
+              <tr>
+                <th>Attention</th>
+                <td>
+                  <input type="text" placeholder="" th:value="'Leo Park'" disabled>
+                </td>
+
+              </tr>
+              <tr>
+                <th>Subject</th>
+                <td>
+                  <input type="text" placeholder="" th:value="${poVo.getRfqItem()}" disabled>
+                  <p class="point_info">
+                    Dear Sir, Madam with regards to the subject, we are very pleased to submit our proposal as below.
+                  </p>
+                </td>
+                <th>P/O No.</th>
+                <td>
+                  <input type="text" id="invoice_poNo" placeholder="" th:value="${poVo.getKPoNo()}" disabled>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+
+            <div class="grid_wrap">
+              <div id="invoiceGrid"></div>
+            </div>
+
+            <div class="flex_wrap half">
+              <div class="flex_box">
+                <table class="tbl_style02 docu_table">
+                  <tbody>
+                  <tr>
+                    <td>
+                      <input type="text" placeholder="서플라이어 담당자이름, 1-10" th:value="${company.getMngName()}" disabled>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" placeholder="서플라이어 담당자 직함, 1-11" th:value="${company.getMngPosition()}" disabled>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="sign">
+                      <div class="sign_img_wrap">
+                        <img class="sign_img_wrap" th:src="${poVo.getSealUrl()}">
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="docu_section03">
+            <div class="remark">
+              <p class="tit">Remark</p>
+              <ul>
+                <li>1) Please make a remittance to :
+                  <div class="emp">
+                    <span th:text="'Bank Name : ' + ${company.getUserBankName()}">Bank Name : IBK (Industrial Bank of Korea)</span><br>
+                    <span th:text="'Account No : ' + ${company.getUserAccount()} + ' / Account Name : ' + ${company.getUserAcname()}">Account No : 565-060472-56-00011 / Account Name : PAIOS Corporation((주)파이오스) / Swift Code : IBKOKXX</span>
+                  </div>
+                </li>
+                <li>2) Please include this invoice number in your bank transaction.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01" onclick="registInvoice()">등록</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+  <th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+
+</html>
+<script>
+  var plGrid;
+  var plView;
+  var plColums;
+  var invoiceGrid;
+  var invoiceView;
+  var invoiceColums;
+  var header = $("meta[name='_csrf_header']").attr("content");
+  var token = $("meta[name='_csrf']").attr("content");
+  var kdat = new wijmo.input.InputDate("#komalDt");
+  var sdat = new wijmo.input.InputDate("#supplierDt");
+  var idat = new wijmo.input.InputDate("#invoiceDt");
+
+  function loadGridSupplierPlList(type, result){
+    if(type == "init"){
+      plView = new wijmo.collections.CollectionView(result, {
+        trackChanges : true
+      });
+
+      plColums = [
+        { binding: 'itemName', header: 'Item',  width: 150 , align:"center"},
+        { binding: 'description', header: 'Description',  width: 150 , align:"center" },
+        { binding: 'qty', header: 'QTY ORDER',  width: 150 , align:"center", aggregate: 'Sum' },
+        { binding: 'amount', header: 'QTY DELEVERY',  width: 150 , align:"center", aggregate: 'Sum' },
+        { binding: 'uPrice', header: 'Estimated Time of Arrival',  width: 200 , align:"center" },
+        { binding: 'remark', header: 'REMARK', width: 100, align:"center"},
+      ];
+
+      plGrid = new wijmo.grid.FlexGrid('#plGrid', {
+        autoGenerateColumns: false,
+        alternatingRowStep: 0,
+        columns: plColums,
+        itemsSource: plView,
+        keyActionEnter: "MoveDown",
+        imeEnabled: true,
+        scrollPositionChanged: function(){
+          plGrid.select(new wijmo.grid.CellRange(plGrid.rows.length - 1,-1), true);
+        },itemFormatter: function(p, r, c, cell) {
+          if (p.cellType == wijmo.grid.CellType.RowHeader) {
+            //cell.textContent = (r+1).toString();
+            cell.textContent = (plView.pageSize * plView.pageIndex + r + 1).toString();
+          }
+        }
+      });
+
+      plGrid.columnFooters.rows.push(new wijmo.grid.GroupRow());
+      plGrid.columnFooters.setCellData(0,0,'TOTAL');
+      plGrid.columnFooters.setCellData(0,1,'TOTAL');
+      plGrid.mergeManager = new FooterMergeManager(plGrid);
+
+      invoiceView = new wijmo.collections.CollectionView(result, {
+        pageSize: 100,
+        trackChanges : true,
+        calculatedFields :{
+          extendedPrice : ($) => $.qty * $.uprice            }
+      });
+
+      invoiceColumns = [
+        { binding: 'itemName', header: 'Item',  width: 150 , align:"center", isReadOnly:true},
+        { binding: 'description', header: 'Description',  width: 150 , align:"center" , isReadOnly:true},
+        { binding: 'qty', header: 'QTY',  width: 80 , align:"center" , isReadOnly:true},
+        { binding: 'amount', header: 'Unit',  width: 150 , align:"center" , isReadOnly:true},
+        { binding: 'uprice', header: 'U/PRICE',  width: 150 , align:"center" , isReadOnly:true},
+        { binding: 'extendedPrice', header: 'Extended Price', width: 150, dataType:'Number', align:"center", isReadOnly:true , allowMerging: false, aggregate: 'Sum'},
+        { binding: 'remark', header: 'REMARK', width: 100, align:"center"},
+      ]
+
+      invoiceGrid = new wijmo.grid.FlexGrid('#invoiceGrid', {
+        autoGenerateColumns: false,
+        allowMerging: 'Cells',
+        alternatingRowStep: 0,
+        columns : invoiceColumns,
+        itemsSource: invoiceView
+      });
+
+      //행번호 표시하기
+      invoiceGrid.itemFormatter = function (panel, r, c, cell) {
+        if (panel.cellType == wijmo.grid.CellType.RowHeader) {
+          cell.textContent = (r + 1).toString();
+        }
+      };
+
+      invoiceGrid.columnFooters.rows.push(new wijmo.grid.GroupRow());
+      invoiceGrid.columnFooters.setCellData(0,0,'GRAND TOTAL');
+      invoiceGrid.columnFooters.setCellData(0,1,'GRAND TOTAL');
+      invoiceGrid.columnFooters.setCellData(0,2,'GRAND TOTAL');
+      invoiceGrid.columnFooters.setCellData(0,3,'GRAND TOTAL');
+      invoiceGrid.columnFooters.setCellData(0,4,'TOTAL');
+      invoiceGrid.mergeManager = new FooterMergeManager(invoiceGrid);
+
+    }else{
+      plView = new wijmo.collections.CollectionView(result, {
+        trackChanges: true,
+        currentItem: null
+      });
+      plGrid.itemsSource = plView;
+
+      invoiceView = new wijmo.collections.CollectionView(result, {
+        trackChanges : true,
+        calculatedFields :{
+          extendedPrice : ($) => $.qty * $.uprice            }
+      });
+      invoiceGrid.itemsSource = invoiceView;
+    }
+  }
+
+  class FooterMergeManager extends wijmo.grid.MergeManager {
+    constructor(grid) {
+      super(grid);
+    }
+
+    getMergedRange(panel, row, col, clip) {
+      if (panel.cellType !== wijmo.grid.CellType.ColumnFooter) {
+        return super.getMergedRange(panel, row, col, clip);
+      }
+      var rg = new wijmo.grid.CellRange(row, col);
+      // expand left/right
+      for (var i = rg.col; i < panel.columns.length - 1; i++) {
+        if (
+                panel.getCellData(rg.row, i, true) !=
+                panel.getCellData(rg.row, i + 1, true)
+        )
+          break;
+        rg.col2 = i + 1;
+      }
+      for (var i = rg.col; i > 0; i--) {
+        if (
+                panel.getCellData(rg.row, i, true) !=
+                panel.getCellData(rg.row, i - 1, true)
+        )
+          break;
+        rg.col = i - 1;
+      }
+      return rg;
+    }
+  }
+
+  //현재날짜 입력
+  function CurDateInit() {
+    var now = new Date();
+
+    var nYear = now.getFullYear();
+    var nMonth = now.getMonth()+1;
+    var nDay = now.getDate();
+
+    if(nMonth < 10)
+      nMonth = "0" + nMonth;
+    if(nDay < 10)
+      nDay = "0" + nDay;
+
+    kdat.isRequired = false;
+    kdat.format = "yyyy-MM-dd";
+    kdat.isReadOnly = true;
+
+    sdat.isRequired = false;
+    sdat.format = "yyyy-MM-dd";
+
+    idat.isRequired = false;
+    idat.format = "yyyy-MM-dd";
+    idat.isReadOnly = true;
+
+  }
+
+  function getPoDtl(){
+    var param = {
+      rfqQno : $('#pl_rfqQno').val(),
+      kPoNo : $('#invoice_poNo').val()
+    };
+
+    $.ajax({
+      type : 'GET',
+      url : '/supplier/getPoDtl',
+      dataType : null,
+      data : param,
+      success : function(result) {
+        console.log("getPoDtl success");
+        loadGridSupplierPlList('search', result);
+      },
+      error: function(request, status, error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+      }
+    });
+  }
+
+  function registPl(){
+    var params = {
+      rfqQno : $('#pl_rfqQno').val(),
+      sPkDt : wijmo.Globalize.format(sdat.value,'yyyy-MM-dd')
+    }
+
+    $.ajax({
+      url: "/supplier/registPl"
+      , method : 'PUT'
+      , data: params
+      , beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+      }
+      , success: function (response) {
+        alert("Packing List가 등록되었습니다.\nInvoice를 등록해주세요.");
+        $('#pl').removeClass("wj-state-active");
+        $('#invoice').addClass("wj-state-active");
+      }
+      , error: function (request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  }
+
+  function registInvoice(){
+    params = {
+      rfqQno : $('#pl_rfqQno').val(),
+      sInvoiceDt : wijmo.Globalize.format(idat.value,'yyyy-MM-dd')
+    }
+
+    $.ajax({
+      url: "/supplier/registInvoice"
+      , method : 'PUT'
+      , data: params
+      , beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+      }
+      , success: function (response) {
+        alert("Invoice가 등록되었습니다.");
+        location.href="/supplier/allPay";
+      }
+      , error: function (request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  }
+
+  $(document.body).ready(function() {
+    loadGridSupplierPlList('init');
+    CurDateInit();
+    new wijmo.nav.TabPanel("#theTabPanel");
+    getPoDtl();
+    $('#allPay').addClass('active');
+  });
+
+</script>

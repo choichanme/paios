@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/header :: headerFragment" ></th:block>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="buyer_qm_payment_do">
+    <div class="inner">
+      <th:block th:replace="fragment/buyer_process :: buyerProcessFragment" ></th:block>
+
+      <ul class="tab_wrap">
+        <li><a href="">P/L</a></li>
+        <li class="current"><a href="">D/O</a></li>
+        <li><a href="">INVOICE</a></li>
+      </ul>
+
+      <div class="docu_wrap">
+        <div class="docu_cont">
+
+          <div class="docu_section01 docu_top_section">
+            <div class="flex_wrap">
+              <img src="img/komal_logo.svg" alt="" class="logo">
+              <ul>
+                <li>#106, Hyuenheim building, GeojeJungangro 13gil,
+                  7, Geojesi, Gyeongnam, Rep. Of Korea
+                  PAIOS CORPORATION</li>
+                <li>Tel: +82 55 634 1968</li>
+                <li>http://www.paiosgroup.com</li>
+                <li>E-mail:leo@paiosgroup.com</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="docu_section02">
+            <div class="docu_tit_wrap flex_wrap bor">
+              <h2>DELIVERY ORDER</h2>
+            </div>
+
+            <div class="do_wrap flex_wrap">
+              <div class="flex_box info01">
+                <p class="tit">Consignee</p>
+                <p class="txt">바이어 회사주소</p>
+                <p class="tit">Notify</p>
+                <p class="txt">SAME AS CONSGNEE</p>
+                <p class="tit">Shipper</p>
+                <p class="txt">파이오스 정보</p>
+              </div>
+              <div class="flex_box info02">
+                <table class="tbl_style02 docu_table">
+                  <tbody>
+                    <tr>
+                      <th>인보이스 넘버</th>
+                      <td>
+                        <input type="text" placeholder="" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>무역조건</th>
+                      <td>
+                        <input type="text" placeholder="" disabled>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+              <div class="flex_box info03">
+                <p class="tit">Packing Information</p>
+                <p class="txt">패킹정보</p>
+              </div>
+            </div>
+
+
+            <div class="flex_wrap half">
+              <div class="flex_box">
+                <table class="tbl_style02 docu_table">
+                  <tbody>
+                    <tr>
+                      <th colspan="2">
+                        <p class="company_name">Signed for and on behalf of <br>PAIOS CORPORATION</p>
+                      </th>
+                    </tr>
+                    <tr>
+                      <th>Signed by</th>
+                      <td class="sign">
+                        <div class="sign_img_wrap">
+                          파이오스 직인 이미지
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Name</th>
+                      <td>
+                        <input type="text" placeholder="Leo Park" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Position</th>
+                      <td>
+                        <input type="text" placeholder="CEO" disabled>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Date</th>
+                      <td>
+                        <input type="text" placeholder="" disabled>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01">완료</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+<script>
+  $(document.body).ready(function() {
+    $('#allPay').addClass('active');
+    // getQuotationDetail();
+  });
+</script>
+</html>

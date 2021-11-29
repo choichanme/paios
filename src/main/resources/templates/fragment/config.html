@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <th:block th:fragment="configFragment">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+        <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+        <link rel="stylesheet" th:href="@{/css/komal.css}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+        <script th:src="@{/js/komal.js}"></script>
+        <!-- wijmo css -->
+        <link rel="stylesheet" th:href="@{/wijmo/styles/custom.css}" />
+        <link rel="stylesheet" th:href="@{/wijmo/styles/wijmo.css}" />
+
+        <!-- wijmo js -->
+        <script type="text/javascript" th:src="@{/wijmo/controls/wijmo.min.js}"></script>
+        <script type="text/javascript" th:src="@{/wijmo/controls/wijmo.grid.min.js}"></script>
+        <script type="text/javascript" th:src="@{/wijmo/controls/wijmo.input.min.js}"></script>
+        <script type="text/javascript" th:src="@{/wijmo/controls/wijmo.xlsx.min.js}"></script>
+        <script type="text/javascript" th:src="@{/wijmo/controls/wijmo.grid.xlsx.min.js}"></script>
+        <script type="text/javascript" th:src="@{/wijmo/controls/wijmo.grid.filter.min.js}"></script>
+        <script type="text/javascript" th:src="@{/wijmo/controls/cultures/wijmo.culture.ko.min.js}"></script>
+        <script type="text/javascript" th:src="@{/wijmo/controls/jszip.min.js}"></script>
+        <script type="text/javascript" th:src="@{/wijmo/controls/wijmo.grid.cellmaker.min.js}"></script>
+        <script type="text/javascript" th:src="@{/wijmo/controls/wijmo.nav.min.js}"></script>
+        <script type="text/javascript" th:src="@{/wijmo/controls/wijmo.grid.selector.min.js}"></script>
+        <script type="text/javascript" th:src="@{/wijmo/controls/wijmo.gauge.min.js}"></script>
+
+<!--        <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    </th:block>
+
+</head>
+
+<body>
+</body>

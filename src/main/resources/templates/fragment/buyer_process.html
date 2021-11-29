@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="process_wrap" th:fragment="buyerProcessFragment">
+    <div class="process_txt_wrap">
+        <p class="tit">FORWARDING PROCESS</p>
+        <p class="txt">4단계 견적 프로세스로 쉽고 빠르게 무역 거래하세요!</p>
+    </div>
+
+    <div class="flex_wrap">
+        <div class="flex_box entire" id="allProc" onclick="location.href='/buyer/allProcess'">
+            <p class="step">전체</p>
+        </div>
+        <div class="flex_box" id="allRfq" data-num="1" onclick="location.href='/buyer/allRfq'">
+            <div class="icon_wrap">
+                <img src="../img/process_icon01.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+                <p class="step">STEP01</p>
+                <p class="step_txt">RFQ 등록</p>
+            </div>
+        </div>
+        <span class="material-icons-outlined arrow">chevron_right</span>
+        <div class="flex_box" id="allFeed" data-num="2" onclick="location.href='/buyer/allFeed'">
+            <div class="icon_wrap">
+                <img src="../img/process_icon02.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+                <p class="step">STEP02</p>
+                <p class="step_txt">견적피드백</p>
+            </div>
+        </div>
+        <span class="material-icons-outlined arrow">chevron_right</span>
+        <div class="flex_box" id="allPo" data-num="1" onclick="location.href='/buyer/po'">
+            <div class="icon_wrap">
+                <img src="../img/process_icon03.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+                <p class="step">STEP03</p>
+                <p class="step_txt">발주</p>
+            </div>
+        </div>
+        <span class="material-icons-outlined arrow">chevron_right</span>
+        <div class="flex_box" id="allPay" data-num="1" onclick="location.href='/buyer/payment'">
+            <div class="icon_wrap">
+                <img src="../img/process_icon04.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+                <p class="step">STEP04</p>
+                <p class="step_txt">배송ㆍ결제</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

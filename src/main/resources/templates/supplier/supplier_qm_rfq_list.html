@@ -1,0 +1,16 @@
+<div class="list_item flex_wrap" th:each="quoVo : ${quoVo}">
+    <div class="box">
+        <p class="quatation_num" th:text="'Quatation Number : '+ ${quoVo.rfqQno}"><span class="material-icons-outlined">content_copy</span>Quatation Number : 11111</p>
+        <ul class="quatation_info">
+            <li  th:text="'아이템 : ' + ${quoVo.rfqItem}">아이템 : butterfly valve</li>
+        </ul>
+    </div>
+    <div class="box">
+        <p class="step">견적내기 :</p>
+        <p class="step_txt" th:if="${quoVo.sQuoInspectYn} == 'N'">"KOMAL 검수 중입니다."</p>
+        <p class="step_txt" th:if="${quoVo.sQuoInspectYn} == 'Y'">"Buyer 견적수락 대기중입니다."</p>
+    </div>
+    <div class="box btn">
+        <button class="btn_style03" onclick="location.href='/supplier/docDtl'">전체서류</button>
+    </div>
+</div>

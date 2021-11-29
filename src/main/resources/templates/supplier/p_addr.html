@@ -1,0 +1,36 @@
+<!DOCTYPE html> <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:s="http://www.thymeleaf.org">
+<head>
+    <title>좌표팝업API</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    function init() {
+     var url = location.href;
+     var confmKey = $("input[name=confmKey]").val();
+           var resultType = "4";
+           var inputYn = $("input[name=inputYn]").val();
+           if (inputYn != "Y") {
+           document.form.confmKey.value = confmKey;
+           document.form.returnUrl.value = url;
+           document.form.resultType.value = resultType;
+           document.form.action = "https://www.juso.go.kr/addrlink/addrLinkUrl.do";
+           document.form.submit();
+           } else {
+           opener.jusoCallBack($("input[name=roadFullAddr]").val(), $("input[name=addrDetail]").val());
+           window.close();
+    }
+    };
+    </script>
+</head>
+<body onload="init();">
+<form id="form" name="form" method="post">
+    <s:csrfInput />
+    <input type="hidden" id="confmKey" name="confmKey" th:value="${confmKey}"/>
+    <input type="hidden" id="returnUrl" name="returnUrl" value=""/>
+    <input type="hidden" id="resultType" name="resultType" value=""/>
+</form>
+<input type="hidden" id="inputYn" name="inputYn" th:value="${inputYn}"/>
+<input type="hidden" id="roadFullAddr" name="roadFullAddr" th:value="${roadFullAddr}"/>
+<input type="hidden" id="addrDetail" name="addrDetail" th:value="${addrDetail}"/>
+</body>

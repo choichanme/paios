@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/supplierHeader :: headerFragment" ></th:block>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>실시간</span> 견적요청</p>
+        <p class="txt">실시간으로 등록되는 견적요청서를 아이템, 카테고리 별로 확인하시고 견적서를 등록하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="supplier_live">
+    <div class="inner">
+      <div class="cont_wrap">
+        <div class="supplier_cate_wrap">
+          <div class="inner">
+            <div class="search">
+              <input type="text" name="input" class="input" placeholder="아이템, 카테고리 검색">
+              <span class="material-icons-outlined search_icon">search</span>
+            </div>
+            <div class="cate_toggle_btn">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <div class="cate_toggle_cont">
+            <div class="inner">
+              <div class="flex_wrap">
+                <div class="flex_box">
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Air-compressor</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Commercial-vessel</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Cable-tube</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Cargo-handling-system</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Cooler</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Communication</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Deck-machinery</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Engine parts</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Engineering-repair</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Electrical consumables</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="flex_box">
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Fabrication</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Filter</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Generator</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Hvac</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Heat-exchanger</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Heater</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>ICT Equipment and Software</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Lubricants & Chemical</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Lifting Gears</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Manpower<br>(On-Offshore, Design, Commissioning,<br>Operation team)</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="flex_box">
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Machinery parts and equipment</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Marine Plate & Bulb flat</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Marine-equipment-tools</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Marine-anti-pollution</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Module-unit</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Measurement</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Offshore-plant</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Outfitting</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Pump</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Piping & Steels</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="flex_box">
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Pressure-vessel</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Safety equipment</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Small-medium-ship</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Spare Parts (Top & Hull Side Machinery)</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Steering-gear</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Scrubber</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Sewage-treatment-system</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Skid-unit</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Tools (Commissioning, Inspection)</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Valve & Fittings</span>
+                    </label>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" id="c1" name="cc">
+                    <label for="c1">
+                      <div class="chk_icon"></div> <span>Water-treatment</span>
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="docu_wrap">
+          <div class="docu_btn_area_top">
+            <select name="" id="" class="list_select">
+              <option value="">마감 임박순 (기준)</option>
+              <option value="">최근 등록순</option>
+            </select>
+
+            <select name="" id="list_select" class="list_select mar_left">
+              <option value="10" selected="selected">10개</option>
+              <option value="20">20개</option>
+              <option value="50">50개</option>
+              <option value="100">100개</option>
+            </select>
+          </div>
+          <div id="list"></div>
+          <div id="paginationWrap"></div>
+        </div>
+
+        </div>
+    </div>
+
+  </div>
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+</html>
+<script>
+  function paginationReloader(page) {
+
+    $.ajax({
+      url: "/supplier/rfqlist",
+      data: {
+        page: page,
+        limit: $('#list_select').val()
+      },
+      type: "GET",
+      dataType: "html",
+      success: function(data) {
+        const list = document.getElementById("list");
+        list.innerHTML = data;
+      }
+    })
+
+    $.ajax({
+      url: "/supplier/rfqpagination",
+      data: {
+        page: page,
+        limit: $('#list_select').val()
+      },
+      type: "GET",
+      dataType: "html",
+      success: function(data) {
+        const pagination = document.getElementById("paginationWrap");
+        pagination.innerHTML = data;
+      }
+    })
+
+  }
+
+  $(document).on("click", ".page", function () {
+    const page = $(this).data("page");
+
+    paginationReloader(page);
+    return false;
+  })
+
+  $(document.body).ready(function() {
+    paginationReloader(1);
+  })
+</script>

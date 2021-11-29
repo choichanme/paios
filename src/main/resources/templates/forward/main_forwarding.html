@@ -1,0 +1,310 @@
+<!DOCTYPE html >
+<html lang="ko" dir="ltr"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body>
+<th:block th:replace="fragment/forwardHeader :: headerFragment" ></th:block>
+
+  <div class="main">
+    <section class="section01">
+      <!-- Slider main container -->
+      <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+          <div class="swiper-slide slide01">
+            <div class="inner">
+              <div class="txt_wrap">
+                <h1 data-num="01">복잡한 서류 <span>NO</span><br>온라인으로 쉽고 빠르게</h1>
+                <p>무역 거래 시 작성해야하는 많은 서류를 이제는 온라인으로<br>편하게 업로드하여 빠르고 손쉽게 무역 거래하세요!</p>
+              </div>
+              <img src="../img/main_slider_img01.png" alt="" class="main_slide_img">
+            </div>
+          </div>
+          <div class="swiper-slide slide02">
+            <div class="inner">
+              <div class="txt_wrap">
+                <h1 data-num="02">복잡한 서류 <span>NO</span><br>온라인으로 쉽고 빠르게</h1>
+                <p>무역 거래 시 작성해야하는 많은 서류를 이제는 온라인으로<br>편하게 업로드하여 빠르고 손쉽게 무역 거래하세요!</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide slide03">
+            <div class="inner">
+              <div class="txt_wrap">
+                <h1 data-num="03">복잡한 서류 <span>NO</span><br>온라인으로 쉽고 빠르게</h1>
+                <p>무역 거래 시 작성해야하는 많은 서류를 이제는 온라인으로<br>편하게 업로드하여 빠르고 손쉽게 무역 거래하세요!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+
+        <!-- <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div> -->
+
+      </div>
+    </section>
+
+    <section class="section02">
+      <div class="inner">
+        <div class="flex_wrap">
+          <div class="flex_box">
+            <p>세계 최초<br>온라인 무역 플랫폼</p>
+          </div>
+          <div class="flex_box">
+            <p class="txt">Korean Suppliers</p>
+            <p class="num" data-count="1400">1200</p>
+          </div>
+          <div class="flex_box">
+            <p class="txt">Malaysia Buyers</p>
+            <p class="num" data-count="370">270</p>
+          </div>
+          <div class="flex_box">
+            <p class="txt">등록금액</p>
+            <p class="num" data-count="540">440</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section03">
+      <div class="inner">
+        <div class="txt_wrap">
+          <h2>실시간 견적요청</h2>
+          <p>실시간으로 등록되는 견적요청서를 아이템,<br>카테고리 별로 확인하시고 견적서를 등록하세요!</p>
+          <a href="/supplier/liveRfq" class="btn_style02">더보기</a>
+        </div>
+        <div class="flex_wrap qm_pre_wrap">
+          <div class="flex_box" th:each="rfqVo : ${rfqVo}">
+            <div class="info_tit">
+              <p class="dday" th:text="'D-'+${rfqVo.dDay}">D-23</p>
+              <p class="ddate" th:text="'견적마감일 : '+ ${rfqVo.deadline}">견적마감일 : 21.08.30</p>
+              <button class="btn_style03" th:onclick="'location.href=\'' + @{'/supplier/viewRfq?rfqQno=' + ${rfqVo.rfqQno}} + '\''">상세보기</button>
+            </div>
+            <div class="info_cont">
+              <p class="qnum"><span>Q.Num</span><span th:text="${rfqVo.rfqQno}">1111</span></p>
+              <p class="item"><span>Item</span><span th:text="${rfqVo.rfqItem}">oil pump, a pump, b pump, c pump</span></p>
+              <p class="trade_cond"><span>무역조건</span><span th:text="${rfqVo.incotermsFlag}">EXW</span></p>
+              <p class="pay_cond"><span>결제조건</span><span th:text="${rfqVo.payTermsFlag}">COD 30</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section04">
+      <div class="inner">
+        <p>KOMAL의 편리한 서비스를 이용하고 싶다면 가입하세요!</p><a href="/user/register" class="btn_style02" sec:authorize="isAnonymous()">회원가입</a>
+      </div>
+    </section>
+
+    <section class="section05">
+      <div class="inner">
+        <div class="txt_wrap">
+          <h2>실시간 견적요청</h2>
+          <p>실시간으로 등록되는 견적요청서를 아이템,<br>카테고리 별로 확인하시고 견적서를 등록하세요!</p>
+          <a href="" class="btn_style02">더보기</a>
+        </div>
+        <!-- Slider main container -->
+        <div class="swiper-pagination"></div>
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="step_txt_wrap">
+                <p class="step"><span class="num">STEP 01</span>견적내기</p>
+                <p>견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요견적내기 관련내용 필요 견적내기 관련내용 필요</p>
+                <p>견적내기 내용내용 견적내기 내용내용 견적내기 내용내용견적내기 내용내용 견적내기 내용내용 견적내기 내용내용 견적내기내용내용 견적내기 내용내용 견적내기 내용내용</p>
+              </div>
+              <div class="line"><a href="">견적 바로가기 <span class="material-icons-outlined">navigate_next</span></a></div>
+            </div>
+            <div class="swiper-slide">
+              <div class="step_txt_wrap">
+                <p class="step"><span class="num">STEP 01</span>견적내기</p>
+                <p>견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요견적내기 관련내용 필요 견적내기 관련내용 필요</p>
+                <p>견적내기 내용내용 견적내기 내용내용 견적내기 내용내용견적내기 내용내용 견적내기 내용내용 견적내기 내용내용 견적내기내용내용 견적내기 내용내용 견적내기 내용내용</p>
+              </div>
+              <div class="line"><a href="">견적 바로가기 <span class="material-icons-outlined">navigate_next</span></a></div>
+            </div>
+            <div class="swiper-slide">
+              <div class="step_txt_wrap">
+                <p class="step"><span class="num">STEP 01</span>견적내기</p>
+                <p>견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요견적내기 관련내용 필요 견적내기 관련내용 필요</p>
+                <p>견적내기 내용내용 견적내기 내용내용 견적내기 내용내용견적내기 내용내용 견적내기 내용내용 견적내기 내용내용 견적내기내용내용 견적내기 내용내용 견적내기 내용내용</p>
+              </div>
+              <div class="line"><a href="">견적 바로가기 <span class="material-icons-outlined">navigate_next</span></a></div>
+            </div>
+            <div class="swiper-slide">
+              <div class="step_txt_wrap">
+                <p class="step"><span class="num">STEP 01</span>견적내기</p>
+                <p>견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요 견적내기 관련내용 필요견적내기 관련내용 필요 견적내기 관련내용 필요</p>
+                <p>견적내기 내용내용 견적내기 내용내용 견적내기 내용내용견적내기 내용내용 견적내기 내용내용 견적내기 내용내용 견적내기내용내용 견적내기 내용내용 견적내기 내용내용</p>
+              </div>
+              <div class="line"><a href="">견적 바로가기 <span class="material-icons-outlined">navigate_next</span></a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section06">
+      <div class="inner">
+        <h2>빠르고 간편하고 안전한 프로세스를 경험하세요!</h2>
+        <div class="flex_wrap">
+          <div class="flex_box">
+            <img src="../img/section06_ico01.png" alt="">
+            <p>빠르고 간편하게<br>무역 프로세스 작성 가능</p>
+          </div>
+          <div class="flex_box">
+            <img src="../img/section06_ico02.png" alt="">
+            <p>서류 등록부터<br>배송까지 올인원 플랫폼</p>
+          </div>
+          <div class="flex_box">
+            <img src="../img/section06_ico03.png" alt="">
+            <p>믿을 수 있는 고객사들과<br>함께 합니다</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section07">
+      <div class="inner">
+        <div class="txt_wrap">
+          <h2>생생한 코말 이용후기를 볼 수 있습니다.</h2>
+          <p>KOMAL 서비스를 통해 원하는 거래를 경험한 당사자들의 생생후기!<br>누적 150개의 후기를 확인하세요!</p>
+          <a href="" class="btn_style02">이용후기</a>
+        </div>
+
+        <div class="flex_wrap">
+          <div class="flex_box">
+            <p class="user">Buyer</p>
+            <p class="item">ITEM : power pump</p>
+
+            <!-- 수정 -->
+            <div class="rating">
+              <input type="radio" value="1" id="rating1-1" name="rating1" disabled>
+              <label for="rating1-1" class="fa fa-star"></label>
+              <input type="radio" value="2" id="rating1-2" name="rating1" disabled>
+              <label for="rating1-2" class="fa fa-star"></label>
+              <input type="radio" value="3" id="rating1-3" name="rating1" checked disabled>
+              <label for="rating1-3" class="fa fa-star"></label>
+              <input type="radio" value="4" id="rating1-4" name="rating1" disabled>
+              <label for="rating1-4" class="fa fa-star"></label>
+              <input type="radio" value="5" id="rating1-5" name="rating1" disabled>
+              <label for="rating1-5" class="fa fa-star"></label>
+            </div>
+            <!-- 수정끝 -->
+
+            <p class="date"><span class="material-icons-outlined">event_note</span>2021. 05. 07</p>
+            <p class="review_txt">한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가 가능한 곳을 한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가 한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가 가능한 곳을 한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가</p>
+          </div>
+          <div class="flex_box">
+            <p class="user">Buyer</p>
+            <p class="item">ITEM : power pump</p>
+            <!-- 수정 -->
+            <div class="rating">
+              <input type="radio" value="1" id="rating1-1" name="rating1" disabled>
+              <label for="rating1-1" class="fa fa-star"></label>
+              <input type="radio" value="2" id="rating1-2" name="rating1" disabled>
+              <label for="rating1-2" class="fa fa-star"></label>
+              <input type="radio" value="3" id="rating1-3" name="rating1" checked disabled>
+              <label for="rating1-3" class="fa fa-star"></label>
+              <input type="radio" value="4" id="rating1-4" name="rating1" disabled>
+              <label for="rating1-4" class="fa fa-star"></label>
+              <input type="radio" value="5" id="rating1-5" name="rating1" disabled>
+              <label for="rating1-5" class="fa fa-star"></label>
+            </div>
+            <!-- 수정끝 -->
+            <p class="date"><span class="material-icons-outlined">event_note</span>2021. 05. 07</p>
+            <p class="review_txt">한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가 가능한 곳을 한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가 한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가 가능한 곳을 한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가</p>
+          </div>
+          <div class="flex_box">
+            <p class="user">Buyer</p>
+            <p class="item">ITEM : power pump</p>
+            <!-- 수정 -->
+            <div class="rating">
+              <input type="radio" value="1" id="rating1-1" name="rating1" disabled>
+              <label for="rating1-1" class="fa fa-star"></label>
+              <input type="radio" value="2" id="rating1-2" name="rating1" disabled>
+              <label for="rating1-2" class="fa fa-star"></label>
+              <input type="radio" value="3" id="rating1-3" name="rating1" checked disabled>
+              <label for="rating1-3" class="fa fa-star"></label>
+              <input type="radio" value="4" id="rating1-4" name="rating1" disabled>
+              <label for="rating1-4" class="fa fa-star"></label>
+              <input type="radio" value="5" id="rating1-5" name="rating1" disabled>
+              <label for="rating1-5" class="fa fa-star"></label>
+            </div>
+            <!-- 수정끝 -->
+            <p class="date"><span class="material-icons-outlined">event_note</span>2021. 05. 07</p>
+            <p class="review_txt">한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가 가능한 곳을 한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가 한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가 가능한 곳을 한국 자재가 품질도 좋고 합리적인 가격이라해서 지속적인 거래가</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section08">
+      <div class="inner">
+        <!-- 수정 -->
+        <div class="txt_wrap">
+          <h2>자주하는 질문</h2>
+          <p>약 100명의 계약 당사자들이 자주 궁금해하는 질문입니다.<br>KOMAL 서비스를 100% 활용하고 싶다면 꼭 확인해주세요!</p>
+          <a href="" class="btn_style02">더보기</a>
+        </div>
+        <!-- 수정끝 -->
+
+        <div class="accordion_wrap active">
+          <div class="accordion_tit active">
+            <div class="circle_plus">
+              <span></span><span></span>
+            </div>
+            <p>서비스 수수료는 얼마인가요?</p>
+            <span class="material-icons-outlined arrow_drop_down">arrow_drop_down</span>
+          </div>
+          <div class="accordion_cont">
+            <p>수수료는 -% 이며 책정 기준은 이러이러합니다. 아이템별로 상이합니다. 카테고리별로 상이합니다.A~C 카테고리 5%, D~F 카테고리 4%,</p>
+          </div>
+        </div>
+
+        <div class="accordion_wrap">
+          <div class="accordion_tit">
+            <div class="circle_plus">
+              <span></span><span></span>
+            </div>
+            <p>서비스 수수료는 얼마인가요?</p>
+            <span class="material-icons-outlined arrow_drop_down">arrow_drop_down</span>
+          </div>
+          <div class="accordion_cont">
+            <p>수수료는 -% 이며 책정 기준은 이러이러합니다. 아이템별로 상이합니다. 카테고리별로 상이합니다.A~C 카테고리 5%, D~F 카테고리 4%,</p>
+          </div>
+        </div>
+
+        <div class="accordion_wrap">
+          <div class="accordion_tit">
+            <div class="circle_plus">
+              <span></span><span></span>
+            </div>
+            <p>서비스 수수료는 얼마인가요?</p>
+            <span class="material-icons-outlined arrow_drop_down">arrow_drop_down</span>
+          </div>
+          <div class="accordion_cont">
+            <p>수수료는 -% 이며 책정 기준은 이러이러합니다. 아이템별로 상이합니다. 카테고리별로 상이합니다.A~C 카테고리 5%, D~F 카테고리 4%,</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+
+</html>

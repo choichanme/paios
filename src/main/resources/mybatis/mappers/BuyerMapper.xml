@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.paios.Mapper.BuyerMapper">
+    <insert id="saveRfq" parameterType="RfqVo">
+        insert into web.buyer_mst
+                (user_id,
+                 rfq_qno,
+                 rfq_dt,
+                 rfq_to,
+                 rfq_attention,
+                 rfq_item,
+                 deadline,
+                 incoterms_flag,
+                 pay_terms_flag,
+                 pay_terms,
+                 currency_flag,
+                 del_loc,
+                 shipment_dt,
+                 d_day,
+                 b_cret_dt,
+                 inspect_yn,
+                 rfq_pdf,
+                 active_yn,
+                 b_quo_yn)
+        values ( #{userId},
+                 #{rfqQno},
+                 #{rfqDt},
+                 #{rfqTo},
+                 #{rfqAttention},
+                 #{rfqItem},
+                 #{deadline},
+                 #{incotermsFlag},
+                 #{payTermsFlag},
+                 #{payTerms},
+                 #{currencyFlag},
+                 #{delLoc},
+                 #{shipmentDt},
+                 #{dDay},
+                 LOCALTIMESTAMP(0),
+                 'N',
+                  #{rfqPdf},
+                 'Y',
+                 'N'
+               )
+    </insert>
+
+    <insert id="saveRfqDetail" parameterType="hashMap">
+        insert into web.buyer_rfq_info
+                (rfq_qno,
+                 index,
+                 item_name,
+                 description,
+                 qty,
+                 u_price,
+                 amount,
+                 remark,
+                 extended_price
+                )
+        values (
+                #{rfqQno},
+                (select coalesce(max(index)+1,1) from web.buyer_rfq_info)::integer,
+                #{itemName},
+                #{description},
+                #{qty}::integer,
+                #{uPrice}::integer,
+                #{amount}::integer,
+                #{remark},
+                #{extendedPrice}
+                 )
+    </insert>
+
+    <select id="getAll" parameterType="HashMap" resultType="RfqVo">
+        select *
+        from web.buyer_mst
+        where 1=1
+          and user_id = #{userId}
+          and b_cret_dt::date between #{searchDtFr}::date and #{searchDtTo}::date
+    </select>
+    
+    <select id="getRfq" parameterType="HashMap" resultType="RfqVo">
+        select *
+        from web.buyer_mst
+        where 1=1
+        and user_id = #{userId}
+        and active_yn = 'Y'
+        and b_cret_dt::date between #{searchDtFr}::date and #{searchDtTo}::date
+        offset #{offset}::integer limit #{limit}::integer
+    </select>
+
+    <select id="getRfqCount" parameterType="HashMap" resultType="Integer">
+        select count(*)
+        from web.buyer_mst
+        where user_id = #{userId}
+        and b_cret_dt::date between #{searchDtFr}::date and #{searchDtTo}::date
+        and active_yn = 'Y'
+    </select>
+
+    <select id="getFeed" parameterType="HashMap" resultType="KomalQuotationVo">
+        select a.rfq_qno, b.rfq_item, b.reject_yn
+        from web.komal_mst a
+        join web.buyer_mst b on a.rfq_qno = b.rfq_qno
+        where 1=1
+          and k_quo_to = #{userId}
+          and k_quo_dt::date between #{searchDtFr}::date and #{searchDtTo}::date
+        offset #{offset}::integer limit #{limit}::integer
+    </select>
+
+    <select id="getFeedCount" parameterType="HashMap" resultType="Integer">
+        select count(*)
+        from web.komal_mst
+        where k_quo_to = #{userId}
+          and k_quo_dt::date between #{searchDtFr}::date and #{searchDtTo}::date
+    </select>
+
+    <select id="getQuotation" parameterType="String" resultType="KomalQuotationVo">
+        select c.rfq_qno, a.b_po_no, a.rfq_dt, a.rfq_to, a.rfq_attention, a.rfq_item, a.deadline, a.pay_terms_flag, a.currency_flag, a.del_loc,  a.incoterms_flag, b.s_quo_hscode, b.s_quo_pkinfo
+        from web.buyer_mst a
+        left join web.suplier_mst b on a.rfq_qno = b.rfq_qno
+        left join web.komal_mst c on a.rfq_qno = c.rfq_qno
+        where a.rfq_qno = #{rfqQno}
+    </select>
+
+    <select id="getQuotationDetail" parameterType="HashMap" resultType="RfqDetailVo">
+        select rfq_qno, item_name, description, qty, u_price , amount, remark, extended_price
+        from web.komal_quo_info
+        where rfq_qno = #{rfqQno}
+    </select>
+
+    <update id="allowQuo" parameterType="String">
+        update web.buyer_mst set
+               reject_yn = 'N',
+               b_po_no = #{poNo},
+               b_po_yn = 'N'
+        where rfq_qno = #{rfqQno}
+    </update>
+
+    <update id="rejectQuo" parameterType="HashMap">
+        update web.buyer_mst set
+               reject_yn = 'Y',
+               reject_flag = #{rejectFlag},
+               reject_txt = #{rejectTxt}
+        where rfq_qno = #{rfqQno}
+    </update>
+
+    <select id="getPo" parameterType="HashMap" resultType="RfqVo">
+        select a.rfq_qno, a.rfq_item, a.reject_yn, a.b_po_dt, a.b_po_yn, a.b_po_pdf
+        from web.buyer_mst a
+        join web.komal_mst b on a.rfq_qno = b.rfq_qno
+        where 1=1
+          and a.user_id = #{userId}
+          and reject_yn = 'N'
+          and b_cret_dt::date between #{searchDtFr}::date and #{searchDtTo}::date
+        offset #{offset}::integer limit #{limit}::integer
+    </select>
+
+    <select id="getPoCount" parameterType="HashMap" resultType="Integer">
+        select count(*)
+        from web.buyer_mst
+        where user_id = #{userId}
+          and b_cret_dt::date between #{searchDtFr}::date and #{searchDtTo}::date
+          and reject_yn = 'N'
+    </select>
+
+    <select id="getPay" parameterType="HashMap" resultType="RfqVo">
+        select a.rfq_qno, a.rfq_item, a.reject_yn, a.b_po_dt, a.b_po_yn, a.b_po_pdf
+        from web.buyer_mst a
+                 join web.komal_mst b on a.rfq_qno = b.rfq_qno
+        where 1=1
+          and a.user_id = #{userId}
+          and b.k_po_confirm_flag = 'Y'
+          and b_cret_dt::date between #{searchDtFr}::date and #{searchDtTo}::date
+        offset #{offset}::integer limit #{limit}::integer
+    </select>
+
+    <select id="getPayCount" parameterType="HashMap" resultType="Integer">
+        select count(*)
+        from web.buyer_mst
+        where user_id = #{userId}
+          and b.k_po_confirm_flag = 'Y'
+          and b_cret_dt::date between #{searchDtFr}::date and #{searchDtTo}::date
+    </select>
+
+    <select id="getKomalPo" parameterType="String" resultType="BuyerPoVo">
+        select c.rfq_qno, a.rfq_dt, a.b_po_no, a.shipment_dt, a.rfq_dt, a.rfq_to, a.rfq_attention, a.rfq_item, a.deadline, a.pay_terms_flag, a.currency_flag, a.del_loc,  a.incoterms_flag, b.s_quo_hscode, b.s_quo_pkinfo
+        from web.buyer_mst a
+                 left join web.suplier_mst b on a.rfq_qno = b.rfq_qno
+                 left join web.komal_mst c on a.rfq_qno = c.rfq_qno
+        where a.rfq_qno = #{rfqQno}
+    </select>
+    
+    <select id="viewPo" parameterType="String" resultType="BuyerPoVo">
+        select *
+        from web.buyer_mst
+        where rfq_qno = #{rfqQno}
+    </select>
+
+    <update id="updateCert" parameterType="CompanyVo">
+        update web.user_tb
+        set cert_num = #{certNum}
+        where user_id = #{userId}
+    </update>
+
+    <select id="checkCert" parameterType="String" resultType="Integer">
+        select count(*)
+        from web.user_tb
+        where 1=1
+        and user_id = #{userId}
+        and cert_num = #{certNum}
+    </select>
+
+    <insert id="savePoInfo" parameterType="BuyerPoVo">
+        insert into web.buyer_po_info
+                (b_po_no, index, item_name, description, qty, u_price, amount, remark)
+        values (
+                #{poNo}
+                ,(select coalesce(max(index)+1,1) from web.buyer_po_info)::integer
+                ,#{itemName}
+                ,#{description}
+                ,#{qty}::integer
+                ,#{uPrice}::integer
+                ,#{extendedPrice}::integer
+                ,#{remark}
+               )
+    </insert>
+
+    <update id="submitPo" parameterType="HashMap">
+        update web.buyer_mst
+        set b_po_dt = #{bPoDt},
+            b_po_hscode = #{bPoHscode},
+            b_po_pkinfo = #{bPoPkinfo},
+            seal_url = #{sealUrl},
+            add_doc = #{addDoc},
+            b_po_pdf = #{poPdf},
+            b_po_yn = 'N'
+        where 1=1
+        and rfq_qno = #{rfqQno}
+    </update>
+</mapper>

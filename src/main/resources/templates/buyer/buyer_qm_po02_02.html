@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/header :: headerFragment" ></th:block>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="buyer_qm_pro02_02">
+    <div class="inner">
+      <th:block th:replace="fragment/buyer_process :: buyerProcessFragment" ></th:block>
+
+      <div class="docu_wrap">
+        <div class="docu_btn_area_top">
+          <button class="btn_style01">등록하기</button>
+        </div>
+
+        <div class="docu_cont">
+
+          <div class="docu_tit_wrap">
+            <h3>파일 업로드 (자사 양식)</h3>
+          </div>
+          <div class='file_input'>
+            <input id="rfqno" type="hidden" th:value="${rfqQno}">
+            <input id="pdf" type="file">
+            <div class="btn">Choose</div>
+            <p id="file_name" data-js-label>No file selected</p>
+          </div>
+          <p class="point_info">.pdf 파일로 업로드 해주세요.</p>
+
+          <canvas id="pdfViewer" class="docu_viewer" style="max-width: 100%"></canvas>
+
+          <table class="docu_table">
+            <tr>
+              <th style="">추가요청서류</th>
+              <td>
+                <input type="checkbox" id="c1" name="cc" value="C/O">
+                <label for="c1"><div class="chk_icon"></div> <span>C/O</span></label>
+
+                <input type="checkbox" id="c2" name="cc" value="MSDS">
+                <label for="c2"><div class="chk_icon"></div> <span>MSDS</span></label>
+
+                <input type="checkbox" id="c3" name="cc" checked value="Customs form">
+                <label for="c3"><div class="chk_icon"></div> <span>Customs form</span></label>
+                <p class="point_info">※ 꼭 필요한 경우에만 체크해 주세요!</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01" onclick="uploadPdf()">등록하기</button>
+        </div>
+
+      </div>
+
+
+
+    </div>
+  </div>
+
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+</body>
+<script>
+  var header = $("meta[name='_csrf_header']").attr("content");
+  var token = $("meta[name='_csrf']").attr("content");
+  var pdfjsLib = window['pdfjs-dist/build/pdf'];
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+  $("#pdf").on("change", function(e){
+    var file = e.target.files[0]
+    if(file.type == "application/pdf"){
+      var fileReader = new FileReader();
+      fileReader.onload = function() {
+        var pdfData = new Uint8Array(this.result);
+        // Using DocumentInitParameters object to load binary data.
+        var loadingTask = pdfjsLib.getDocument({data: pdfData});
+        loadingTask.promise.then(function(pdf) {
+          console.log('PDF loaded');
+
+          // Fetch the first page
+          var pageNumber = 1;
+          pdf.getPage(pageNumber).then(function(page) {
+            console.log('Page loaded');
+
+            var scale = 1.5;
+            var viewport = page.getViewport({scale: scale});
+
+            // Prepare canvas using PDF page dimensions
+            var canvas = $("#pdfViewer")[0];
+            var context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render PDF page into canvas context
+            var renderContext = {
+              canvasContext: context,
+              viewport: viewport
+            };
+            var renderTask = page.render(renderContext);
+            renderTask.promise.then(function () {
+              console.log('Page rendered');
+            });
+          });
+        }, function (reason) {
+          // PDF loading error
+          console.error(reason);
+        });
+      };
+      fileReader.readAsArrayBuffer(file);
+    }else {
+      alert("PDF파일만 업로드 가능합니다.");
+      $('#pdf').val("");
+      $('#file_name').text("No file selected");
+      var canvas = $("#pdfViewer")[0];
+      canvas.getContext('2d').clearRect(0,0, canvas.width, canvas.height);
+    }
+  });
+
+  function uploadPdf() {
+    var form = new FormData();
+    var idxArr = new Array();
+      $('input[type=checkbox]:checked').each(function (e) {
+        var value = $(this).val();
+        idxArr.push(value);
+      })
+
+    form.append("pdf", $("#pdf")[0].files[0]);
+    form.append("rfqQno", $('#rfqno').val());
+    form.append("addDoc", idxArr.toString());
+
+    $.ajax({
+      url: "/buyer/uploadPoPdf"
+      , method : 'POST'
+      , processData: false
+      , enctype : 'multipart/form-data'
+      , contentType: false
+      , data: form
+      , beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+      }
+      , success: function (response) {
+        alert("발주가 완료되었습니다.");
+        location.href = "/buyer/po"
+      }
+      , error: function (request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  }
+
+  $(document.body).ready(function() {
+    $('#allPo').addClass('active');
+    // getQuotationDetail();
+  });
+</script>
+</html>

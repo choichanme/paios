@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/supplierHeader :: headerFragment" ></th:block>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="supplier_qm">
+    <div class="inner">
+      <th:block th:replace="fragment/supplier_process :: supplierProcessFragment" ></th:block>
+
+      <!-- 견적서가 없을때 -->
+      <!-- <div class="cont_wrap nodata">
+        <p>확인 가능한 견적서가 없습니다. 견적서를 등록해주세요.</p>
+        <button class="btn_style01">견적내기</button>
+      </div> -->
+
+      <!-- 리스트 있을 때 -->
+      <div class="cont_wrap">
+        <div class="date_check">
+          <span class="txt">조회기간</span>
+          <input type="text" class="datepicker"><span class="to">-</span><input type="text" class="datepicker">
+          <button class="btn_style01 mar_left">조회</button>
+          <select name="" id="" class="mar_left">
+            <option value="">전체</option>
+            <option value="">진행중</option>
+            <option value="">완료</option>
+          </select>
+        </div>
+
+
+        <div class="docu_wrap">
+          <div class="docu_btn_area_top">
+            <select name="" id="" class="list_select">
+              <option value="">5개</option>
+              <option value="">10개</option>
+              <option value="">20개</option>
+              <option value="">50개</option>
+            </select>
+          </div>
+          <div class="list">
+            <div class="list_item flex_wrap">
+              <div class="box">
+                <p class="quatation_num"><span class="material-icons-outlined">content_copy</span>Quatation Number : 11111</p>
+                <ul class="quatation_info">
+                  <li>아이템 : butterfly valve</li>
+                </ul>
+              </div>
+              <div class="box">
+                <p class="step">견적내기 :</p>
+                <p class="step_txt">"KOMAL 검수 중입니다."</p>
+              </div>
+              <div class="box btn">
+                <button class="btn_style03" onclick="location.href='/supplier/docDtl'">전체서류</button>
+              </div>
+            </div>
+
+            <div class="list_item flex_wrap">
+              <div class="box">
+                <p class="quatation_num"><span class="material-icons-outlined">content_copy</span>Quatation Number : 11111</p>
+                <ul class="quatation_info">
+                  <li>아이템 : butterfly valve</li>
+                </ul>
+              </div>
+              <div class="box">
+                <p class="step">발주 :</p>
+                <p class="step_txt">"P/O 서류를 확인하세요"</p>
+              </div>
+              <div class="box btn">
+                <button class="btn_style03">P/O 확인</button>
+                <button class="btn_style03" onclick="location.href='/supplier/docDtl'">전체서류</button>
+              </div>
+            </div>
+
+            <div class="list_item flex_wrap">
+              <div class="box">
+                <p class="quatation_num"><span class="material-icons-outlined">content_copy</span>Quatation Number : 11111</p>
+                <ul class="quatation_info">
+                  <li>아이템 : butterfly valve</li>
+                </ul>
+              </div>
+              <div class="box">
+                <p class="step">배송ㆍ결제 : </p>
+                <p class="step_txt">"P/L, D/O, Invoice를 확인하세요"</p>
+                <p class="step_txt">"배송 및 결제를 조회하세요"</p>
+              </div>
+              <div class="box btn">
+                <button class="btn_style03">배송ㆍ결제 서류 확인</button>
+                <button class="btn_style03">배송ㆍ결제 조회</button>
+                <button class="btn_style03">추가 서류 제출</button>
+                <button class="btn_style03" onclick="location.href='/supplier/docDtl'">전체서류</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<div class="list_item flex_wrap" th:each="payVo : ${payVo}">
+    <div class="box">
+        <p class="quatation_num" th:text="'Quatation Number : ' + ${payVo.rfqQno}"><span class="material-icons-outlined">content_copy</span>Quatation Number : 11111</p>
+        <ul class="quatation_info">
+            <li th:text="'아이템 : ' + ${payVo.rfqItem}">아이템 : butterfly valve</li>
+        </ul>
+    </div>
+    <div class="box">
+        <p class="step">배송ㆍ결제 :</p>
+        <p class="step_txt" th:if="${payVo.sPlRegistYn} == 'N'">"배송ㆍ결제(Packing List) 서류를 작성하세요"</p>
+        <p class="step_txt" th:if="${payVo.sInvoiceRegistYn} == 'N'">"배송ㆍ결제(Invoice) 서류를 작성하세요"</p>
+        <p class="step_txt" th:if="${payVo.sPlRegistYn} == 'Y' and ${payVo.sInvoiceRegistYn} == 'Y'">"배송 및 결제를 조회하세요"</p>
+    </div>
+    <div class="box btn">
+        <button class="btn_style03" th:if="${payVo.sPlRegistYn} == 'N' or ${payVo.sInvoiceRegistYn} == 'N'" th:onclick="'location.href=\''+ @{'/supplier/payRfq?rfqQno=' + ${payVo.rfqQno}} + '\''">배송ㆍ결제 서류 작성</button>
+        <button class="btn_style03" th:if="${payVo.sPlRegistYn} == 'Y' and ${payVo.sInvoiceRegistYn} == 'Y'" th:onclick="'location.href=\''+ @{'/supplier/payView?rfqQno=' + ${payVo.rfqQno}} + '\''">배송ㆍ결제 서류 확인</button>
+        <button class="btn_style03" th:onclick="'location.href=\''+ @{'/supplier/shipment?rfqQno=' + ${payVo.rfqQno}} + '\''">배송ㆍ결제 조회</button>
+        <button class="btn_style03 modal_trigger" onclick="openPop();">추가 서류 제출</button>
+        <button class="btn_style03" onclick="location.href='/supplier/docDtl'">전체서류</button>
+    </div>
+
+    <!-- 모달창 -->
+    <div class="modal modal01" id="modal">
+        <div class="modal_bg"></div>
+        <div class="modal_cont sign_regi">
+            <span class="material-icons-outlined close" onclick="closePop();">close</span>
+            <h3>추가 서류 제출</h3>
+
+            <table class="tbl_style01">
+                <tbody>
+                <block th:each="addDoc : ${#strings.arraySplit(payVo.getAddDoc(),',')}">
+                <tr th:if="${addDoc} == 'Customs form'">
+                    <th>Customs form</th>
+                    <td>
+                        <div class="file_input">
+                            <input type="file">
+                            <div class="btn">Choose</div>
+                            <p data-js-label="">No file selected</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${addDoc} == 'MSDS'">
+                    <th>MSDS</th>
+                    <td>
+                        <div class="file_input">
+                            <input type="file">
+                            <div class="btn">Choose</div>
+                            <p data-js-label="">No file selected</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${addDoc} == 'C/O'">
+                    <th>C/O</th>
+                    <td>
+                        <div class="file_input">
+                            <input type="file">
+                            <div class="btn">Choose</div>
+                            <p data-js-label="">No file selected</p>
+                        </div>
+                    </td>
+                </tr>
+                </block>
+                </tbody>
+            </table>
+            <button class="btn_style01 bottom">등록</button>
+        </div>
+    </div>
+</div>

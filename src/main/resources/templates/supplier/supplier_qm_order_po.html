@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <title></title>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/supplierHeader :: headerFragment" ></th:block>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="supplier_qm_order_po">
+    <div class="inner">
+      <th:block th:replace="fragment/supplier_process :: supplierProcessFragment" ></th:block>
+
+
+      <div class="docu_wrap">
+
+        <div class="docu_cont account">
+          <div class="docu_tit_wrap flex_wrap">
+            <h3>계좌정보 입력</h3>
+          </div>
+          <table class="tbl_style01 docu_table">
+            <tbody>
+              <tr>
+                <th>계좌번호</th>
+                <td>
+                  <input id="account" type="text" placeholder="1-3" >
+                  <span id="account_valid" class="input_alert" style="display: none">숫자만 입력하세요.</span>
+                  <p class="point_info">
+                    - 제외한 숫자만 입력하세요.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <th>은행명</th>
+                <td>
+                  <select name="" id="bank">
+                    <option value="기업은행">기업은행</option>
+                    <option value="국민은행">국민은행</option>
+                    <option value="수협은행">수협은행</option>
+                    <option value="신한은행">신한은행</option>
+                    <option value="우리은행">우리은행</option>
+                    <option value="경남은행">경남은행</option>
+                    <option value="우체국">우체국</option>
+                    <option value="농협">농협</option>
+                    <option value="카카오뱅크">카카오뱅크</option>
+                  </select>
+                </td>
+
+                <th>예금주</th>
+                <td>
+                  <input id="acname" type="text" placeholder="">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+
+          <div class="docu_tit_wrap flex_wrap">
+            <h3>추가 요청된 서류</h3>
+          </div>
+          <table class="tbl_style01 docu_table">
+            <tbody>
+              <tr>
+                <td>
+                  <block th:each="addDoc : ${#strings.arraySplit(poVo.getAddDoc(),',')}">
+                    <input th:if="${addDoc} == 'C/O'" type="checkbox" id="c1" name="cc" value="C/O" checked disabled>
+                    <label for="c1" th:if="${addDoc} == 'C/O'"><div class="chk_icon"></div> <span>C/O</span></label>
+
+                    <input th:if="${addDoc} == 'MSDS'" type="checkbox" id="c2" name="cc" value="MSDS" checked disabled>
+                    <label for="c2" th:if="${addDoc} == 'MSDS'"><div class="chk_icon"></div> <span>MSDS</span></label>
+
+                    <input th:if="${addDoc} == 'Customs form'" type="checkbox" id="c3" name="cc" checked value="Customs form" disabled>
+                    <label for="c3" th:if="${addDoc} == 'Customs form'"><div class="chk_icon"></div> <span>Customs form</span></label>
+                  </block>
+                  <span class="input_alert" style="margin-top:12px;" th:if="${poVo.getAddDoc()} == '' or ${poVo.getAddDoc()} == null">※ 추가 요청된 서류가 있습니다. / 추가 요청된 서류가 없습니다.</span>
+                  <span class="input_alert" style="margin-top:12px;" th:if="${poVo.getAddDoc()} != '' or ${poVo.getAddDoc()} != null">※ 추가 요청된 서류가 있습니다.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01" onclick="registAccount()">등록하기</button>
+        </div>
+
+        <div class="docu_cont">
+          <div class="docu_section01 docu_top_section">
+            <div class="flex_wrap">
+              <img src="../img/komal_logo.svg" alt="" class="logo">
+              <ul>
+                <li>#16, Hyuenheim building, GeojeJungangro 13gil,
+                  7, Geojesi, Gyeongnam, Rep. Of Korea
+                  PAIOS CORPORATION
+                <li>Tel: +82 55 634 1968</li>
+                <li>http://www.paiosgroup.com</li>
+                <li>E-mail:leo@paiosgroup.com</li>
+              </ul>
+            </div>
+          </div>
+
+
+          <img class="docu_section02">
+            <div class="docu_tit_wrap flex_wrap bor">
+              <h2>PURCHASE ORDER</h2>
+            </div>
+
+            <table class="tbl_style02 docu_table">
+              <tbody>
+                <tr>
+                  <th>Date</th>
+                  <td>
+                    <input type="text" placeholder="123456789, 1-2 " th:value="${poVo.getRfqDt()}" disabled>
+                  </td>
+                  <th>Ref Q.no.</th>
+                  <td><input id="rfqQno" type="text" placeholder="123456789, 1-2 " th:value="${rfqQno}" disabled></td>
+                </tr>
+                <tr>
+                  <th>To</th>
+                  <td>
+                    <input type="text" placeholder="30th, Jan 2022" disabled>
+                  </td>
+                  <th>Ref P.O.No.</th>
+                  <td>
+                    <input id="kPoNo" type="text" placeholder="123456789, 1-2 " th:value="${poVo.getKPoNo()}" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Attention</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Subject</th>
+                  <td>
+                    <input type="text" placeholder="주요제품" th:value="${poVo.getRfqItem()}" disabled>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="grid_wrap">
+              <div id="poGrid"></div>
+            </div>
+
+            <table class="docu_table">
+              <tbody>
+                <tr>
+                  <th>Incoterms 2020</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getIncotermsFlag()}" disabled>
+                  </td>
+                  <th>Name</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Payment Term</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getPayTermsFlag()}" disabled>
+                  </td>
+                  <th>Position</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Delivery Location</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getDelLoc()}" disabled>
+                  </td>
+                  <th>Date</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+
+                </tr>
+                <tr>
+                  <th>Shipment</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getSQuoShipment()}" disabled>
+                  </td>
+                  <th>Signed by</th>
+                  <td class="sign">
+                    <button href="" class="btn_style03 modal_trigger" data-modal-link="modal01"><span class="material-icons-outlined">add</span>직인추가</button>
+                    <img id="sealUrl" class="sign_img_wrap">
+                      <span class="material-icons close">cancel</span>
+                    </img>
+                    <img></img>
+                  </td>
+                </tr>
+                <tr>
+                  <th>HS CODE</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getSQuoHscode()}" disabled>
+                  </td>
+                  <th>추가요청서류</th>
+                  <td>
+                    <block th:each="addDoc : ${#strings.arraySplit(poVo.getAddDoc(),',')}">
+                      <input th:if="${addDoc} == 'C/O'" type="checkbox" id="c1" name="cc" value="C/O" checked disabled>
+                      <label for="c1" th:if="${addDoc} == 'C/O'"><div class="chk_icon"></div> <span>C/O</span></label>
+
+                      <input th:if="${addDoc} == 'MSDS'" type="checkbox" id="c2" name="cc" value="MSDS" checked disabled>
+                      <label for="c2" th:if="${addDoc} == 'MSDS'"><div class="chk_icon"></div> <span>MSDS</span></label>
+
+                      <input th:if="${addDoc} == 'Customs form'" type="checkbox" id="c3" name="cc" checked value="Customs form" disabled>
+                      <label for="c3" th:if="${addDoc} == 'Customs form'"><div class="chk_icon"></div> <span>Customs form</span></label>
+                    </block>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Remarks</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getRemark()}" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Packing</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${poVo.getSQuoPkinfo()}" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Quality</th>
+                  <td>
+                    To be about same as explained
+                  </td>
+                </tr>
+                <tr>
+                  <th>Return</th>
+                  <td>
+                    Return is only available against defective products. Otherwise, never acceptable.
+                  </td>
+                </tr>
+                <tr>
+                  <th></th>
+                  <td colspan="3">
+                    <p class="dap">Price is Including Tax, Duty and K1</p>
+                    <p class="ddp">Price is not Including Tax, Duty and K1</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01" onclick="submitPo();">등록하기</button>
+        </div>
+
+      </div>
+
+      <!-- 모달창 -->
+      <div class="modal modal01">
+        <div class="modal_bg"></div>
+        <div class="modal_cont sign_regi">
+          <span class="material-icons-outlined close" onclick="closeModal()">close</span>
+          <h3>직인등록</h3>
+          <div class="flex_wrap">
+            <div class="flex_box sign">
+              <div class="file_input">
+                <input type="file" id="sign_file" name="sign_file">
+                <div class="btn">Choose</div>
+                <p id="file_name" data-js-label="">No file selected</p>
+              </div>
+              <img id="sign_viewer" class="img_viewer" />
+            </div>
+            <div class="flex_box conf">
+              <div class="form_wrap">
+                <p class="form_name">Email</p>
+                <div class="input_wrap">
+                  <input id="email" type="text" th:value="${company.getComEmail()}" placeholder="Email" disabled>
+                  <button type="button" class="btn_style01" onclick="sendReqEmail()">인증요청</button>
+                </div>
+              </div>
+              <div class="form_wrap">
+                <p class="form_name">인증번호</p>
+                <div class="input_wrap">
+                  <input id="certNum" type="text" placeholder="01012345678"/>
+                  <button type="button" class="btn_style01" onclick="checkCert()">인증</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn_style01 bottom" onclick="registSeal()">등록</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+
+</html>
+<script>
+  var header = $("meta[name='_csrf_header']").attr("content");
+  var token = $("meta[name='_csrf']").attr("content");
+  var poGrid;
+  var poView;
+  var poColums;
+  var accountCheck = false;
+  var certificationCheck = false;
+
+  function loadGridPoList(type, result) {
+    if(type == "init"){
+      poView = new wijmo.collections.CollectionView(result, {
+        calculatedFields :{
+          amount : ($) => $.qty * $.uprice
+        },
+        trackChanges : true
+      });
+
+      poColums = [
+        { binding: 'itemName', header: 'Item',  width: 150 , isReadOnly:true, align:"center"},
+        { binding: 'description', header: 'Description',  width: 150 , isReadOnly:true, align:"center" },
+        { binding: 'qty', header: 'QTY',  width: 80 , isReadOnly:true, align:"center" },
+        { binding: 'uprice', header: 'U/PRICE',  width: 150, isReadOnly:true, align:"center"},
+        { binding: 'amount', header: 'AMOUNTS', width: 150 , isReadOnly:true, align:"center", dataType:'Number', aggregate: 'Sum', allowMerging: false},
+        { binding: 'remark', header: 'REMARK', width: 100, isReadOnly:true, align:"center"},
+      ];
+
+      poGrid = new wijmo.grid.FlexGrid('#poGrid', {
+        autoGenerateColumns: false,
+        alternatingRowStep: 0,
+        columns: poColums,
+        itemsSource: poView,
+        keyActionEnter: "MoveDown",
+        imeEnabled: true,
+        scrollPositionChanged: function(){
+          poGrid.select(new wijmo.grid.CellRange(poGrid.rows.length - 1,-1), true);
+        },
+        itemFormatter: function(p, r, c, cell) {
+          if (p.cellType == wijmo.grid.CellType.RowHeader) {
+            //cell.textContent = (r+1).toString();
+            cell.textContent = (poView.pageSize * poView.pageIndex + r + 1).toString();
+          }
+        }
+      });
+      poGrid.columnFooters.rows.push(new wijmo.grid.GroupRow());
+      poGrid.columnFooters.setCellData(0,3,'SUBTOTAL');
+      poGrid.columnFooters.rows.push(new wijmo.grid.GroupRow());
+      poGrid.columnFooters.setCellData(1,3,'GRAND TOTAL(USD)');
+
+    }else{
+      poView = new wijmo.collections.CollectionView(result, {
+        trackChanges : true,
+        calculatedFields :{
+          amount : ($) => $.qty * $.uprice}
+      });
+      poGrid.itemsSource = poView;
+    }
+  }
+
+  function getPoDetail() {
+    var param = {
+      kPoNo : $('#kPoNo').val()
+    }
+
+    $.ajax({
+      url : '/supplier/getPoDtl',
+      dataType : null,
+      data : param,
+      success : function(result) {
+        console.log("getPoDetail success");
+        loadGridPoList('search', result);
+      },
+      error: function(request, status, error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+      }
+    });
+  }
+
+  function handleImgFileSelect(e) {
+    var files = e.target.files;
+    var filesArr = Array.prototype.slice.call(files);
+    var maxSize = 3500000;
+    var size = e.target.files[0].size;
+
+    var reg = /(.*?)\/(jpg|jpeg|png)$/;
+
+    filesArr.forEach(function(f) {
+      if(!f.type.match(reg)) {
+        alert("확장자는 이미지 확장자만 가능합니다");
+        $('#sign_file').val("");
+        $('#file_name').text("No file selected");
+        return ;
+      }
+      if(size > maxSize){
+        alert("이미지 사이즈는 3MB 초과할수 없습니다.");
+        $('#sign_file').val("");
+        $('#file_name').text("No file selected");
+        $("#sign_viewer").attr("src", "");
+        return ;
+      }
+
+      sel_file = f;
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $("#sign_viewer").attr("src", e.target.result);
+      }
+      reader.readAsDataURL(f);
+    })
+
+  }
+
+  function closeModal() {
+    $('#sign_file').val("");
+    $('#file_name').text("No file selected");
+    $('#sign_viewer').attr("src", "");
+    $('#certNum').val("");
+    // certificationCheck = false;
+  }
+
+  function sendReqEmail() {
+
+    $.ajax({
+      url : "/buyer/certemail",
+      success : function(data) {
+        alert("인증번호를 메일로 전송했습니다.");
+      },
+      error : function(request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+
+  }
+
+  function checkCert() {
+    param = {
+      certNum : $('#certNum').val()
+    }
+
+    $.ajax({
+      url : "/buyer/checkCert",
+      async : true, // 비동기모드 : true, 동기식모드 : false
+      cache : false,
+      dataType : 'text',
+      data : param,
+      success : function(data) {
+        if(data == 1){
+          alert("인증되었습니다.");
+          certificationCheck = true;
+        }else {
+          alert("인증번호가 올바르지 않습니다.");
+          certificationCheck = false;
+        }
+      },
+      error : function(request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  }
+
+  function registSeal() {
+    if($('#sign_file').val() == "" || $('#sign_file').val() == null){
+      alert("직인 이미지를 등록해주세요.");
+      return false;
+    }
+    if(!certificationCheck) {
+      alert("인증이 완료되지 않았습니다.");
+      return false;
+    }else{
+      console.log($("#sign_file")[0].files[0]);
+      var form = new FormData();
+      form.append("image", $("#sign_file")[0].files[0]);
+
+      $.ajax({
+        url: "/buyer/uploadSeal"
+        , method : 'POST'
+        , processData: false
+        , enctype : 'multipart/form-data'
+        , contentType: false
+        , data: form
+        , beforeSend: function(xhr){
+          xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+        }
+        , success: function (response) {
+          alert("확인");
+          $('#sealUrl').attr("src", response);
+          $('.modal .close').click();
+        }
+        , error: function (request,status,error) {
+          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    }
+  }
+
+  function registAccount(){
+    if(confirm("계좌정보를 등록하시겠습니까?")){
+      var acRule   = /^[0-9]$/;
+
+      if($('#account').hasClass('input_alert')) {
+        $('#account').removeClass('input_alert');
+        $('#account_valid').hide();
+      }
+      if($('#account').val() == '' ){
+        alert("계좌번호를 등록해주세요;");
+        $('#account').focus;
+        return false;
+      }
+      if(!$.isNumeric($('#account').val())){
+        $('#account').addClass('input_alert');
+        $('#account_valid').show();
+        $('#account').focus;
+        return false;
+      }
+      if($('#acname').val() == ''){
+        alert("예금주를 등록해주세요;");
+        $('#acname').focus;
+        return false;
+      }
+
+      var params = {
+        account : $('#account').val(),
+        acname: $('#acname').val(),
+        bank: $('#bank').val()
+      }
+
+      $.ajax({
+        url : "/supplier/registAccount",
+        async : false, // 비동기모드 : true, 동기식모드 : false
+        cache : false,
+        dataType : 'text',
+        beforeSend: function(xhr){
+          xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+        },
+        type : 'POST',
+        data : params,
+        success : function(data) {
+          alert("계좌등록이 완료되었습니다.");
+          accountCheck = true;
+        },
+        error : function(request,status,error) {
+          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    }
+  }
+
+  function submitPo() {
+    if(confirm("등록하시겠습니까?")){
+      if(!accountCheck){
+        alert("계좌정보를 입력해주십시오.");
+        $('#account').focus;
+        return false;
+      }
+      if(!certificationCheck){
+        alert("직인을 등록해주십시오.");
+        return false;
+      }
+
+      var param = {
+        rfqQno : $('#rfqQno').val(),
+        sealUrl: $('#sealUrl').attr("src")
+      }
+
+      $.ajax({
+        url: "/supplier/submitPo"
+        , method : 'POST'
+        , data: param
+        , beforeSend: function(xhr){
+          xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+        }
+        , success: function (response) {
+          alert("등록되었습니다.");
+          location.href="/supplier/allPay";
+        }
+        , error: function (request,status,error) {
+          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    }
+
+  }
+
+  $(document.body).ready(function() {
+    $('#allPo').addClass('active');
+    $('#sign_file').on("change", handleImgFileSelect);
+    loadGridPoList('init');  	//그리드 초기화
+    getPoDetail();
+  });
+</script>

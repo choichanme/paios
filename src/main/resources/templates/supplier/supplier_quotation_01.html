@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+</head>
+
+<body class="bg02">
+<th:block th:replace="fragment/supplierHeader :: headerFragment" ></th:block>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>RFQ</span> 등록</p>
+        <p class="txt">KOMAL 양식</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="supplier_quatation">
+    <div class="inner">
+      <th:block th:replace="fragment/supplier_process :: supplierProcessFragment" ></th:block>
+
+      <div class="docu_wrap">
+        <div class="docu_btn_area_top">
+          <button class="btn_style01" onclick="suggestQuo();">등록하기</button>
+        </div>
+        <div class="docu_cont">
+
+          <div class="docu_section01 docu_top_section">
+            <div class="flex_wrap">
+              <img src="img/komal_logo.svg" alt="" class="logo">
+              <ul>
+                <li>#16, Hyuenheim building, GeojeJungangro 13gil,
+                  7, Geojesi, Gyeongnam, Rep. Of Korea
+                  PAIOS CORPORATION
+                <li>Tel: +82 55 634 1968</li>
+                <li>http://www.paiosgroup.com</li>
+                <li>E-mail:leo@paiosgroup.com</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="docu_section02">
+            <div class="docu_tit_wrap flex_wrap bor">
+              <h2>KOMAL RFQ FORM</h2>
+            </div>
+
+            <table class="tbl_style02 docu_table">
+              <tbody>
+                <tr>
+                  <th>Date</th>
+                  <td>
+                    <input type="text" placeholder="123456789, 1-2 " th:value="${rfqVo.getRfqDt()}" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>To</th>
+                  <td>
+                    <input id="rfqto" type="text" placeholder="" disabled>
+                  </td>
+                  <th>Quote Ref No.</th>
+                  <td>
+                    <input type="text" id="rfqQno" placeholder="123456789, 1-2 " th:value="${rfqVo.getRfqQno()}" disabled>
+                  </td>
+                </tr>
+                </tr>
+                <tr>
+                  <th>Attention</th>
+                  <td>
+                    <input type="text" placeholder="" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Re <span class="sub_info">Quotation of</span></th>
+                  <td>
+                    <input id="rfqItem" type="text" placeholder="1-3" th:value="${rfqVo.getRfqItem()}" disabled>
+                    <p class="point_info">
+                      Dear Sir, Madam with regards to the subject, we are very pleased to submit our proposal as below.
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="grid_wrap">
+              <div id="rfqGrid"></div>
+            </div>
+
+            <div class="dash_line"></div>
+
+            <div class="docu_tit_wrap">
+              <h3><span class="material-icons-outlined">description</span>Term & Conditions</h3>
+            </div>
+
+            <table class="tbl_style02 docu_table">
+              <tbody>
+                <tr>
+                  <th>RFQ Deadline</th>
+                  <td>
+                    <input type="text" class="datepicker" th:value="${rfqVo.getDeadline()}" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Payment term</th>
+                  <td>
+                    <input type="text" placeholder="1-5, T/T" th:value="${rfqVo.getPayTermsFlag()}" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Currency</th>
+                  <td>
+                    <input type="text" placeholder="USD" th:value="${rfqVo.getCurrencyFlag()}" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Delivery Location</th>
+                  <td>
+                    <input type="text" placeholder="" th:value="${rfqVo.getDelLoc()}" disabled>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Shipment</th>
+                  <td>
+                    <input type="text" id="shipment" placeholder="" >
+                  </td>
+                </tr>
+                <tr>
+                  <th>HS CODE</th>
+                  <td>
+                    <input type="text" id="hscode" placeholder="" >
+                  </td>
+                </tr>
+                <tr>
+                  <th>Packing information</th>
+                  <td>
+                    <input type="text" id="packing" placeholder="" >
+                    <span id="packingvalid"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="dash_line"></div>
+
+            <div class="docu_tit_wrap">
+              <h3><span class="material-icons-outlined">business</span>Company Information</h3>
+              <p class="docu_tit_subtxt">This is the information you enter at the time of initial creation. After that, it will be automatically filled out when creating RFQ and can be modified in my information.</p>
+            </div>
+            <table class="docu_table">
+              <tbody>
+                <tr>
+                  <th>Company Name</th>
+                  <td>
+                    <input id="company" type="text" placeholder="" th:value="${companyVo.getCompany()}">
+                    <span id="companyvalid"></span>
+                  </td>
+
+                </tr>
+                <tr>
+                  <th>사업자등록번호</th>
+                  <td>
+                    <input id="comregnum" type="text" placeholder="" th:value="${companyVo.getComRegnum()}">
+                    <span id="comregnumvalid"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Company Address</th>
+                  <td>
+                    <div class="input_wrap">
+                      <input id="address" type="text" placeholder="" th:value="${companyVo.getComAddr()}" disabled>
+                      <button class="btn_style01 mar_left" onclick="goPopup()">검색</button>
+                      <span id="addressvalid"></span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>d
+                  <th>Company Phone Number</th>
+                  <td>
+                    <input id="cellnum" type="text" placeholder="" th:value="${companyVo.getComNum()}">
+                    <span id="cellnumvalid"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>
+                    <input id="email" type="text" placeholder="" th:value="${companyVo.getComEmail()}">
+                    <span id="emailvalid"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Name (Incharge Person)</th>
+                  <td>
+                    <div class="input_wrap">
+                      <input id="name" type="text" placeholder="" th:value="${companyVo.getMngName()}">
+                      <span id="namevalid"></span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Position</th>
+                  <td>
+                    <input id="position" type="text" placeholder="" th:value="${companyVo.getMngPosition()}">
+                  </td>
+                </tr>
+                <tr>
+                  <th>Contact Point</th>
+                  <td>
+                    <input id="mngnum" type="text" placeholder="" th:value="${companyVo.getMngNum()}">
+                    <span id="mngnumvalid"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Website</th>
+                  <td>
+                    <input type="text" id="website" placeholder="" th:value="${companyVo.getComSite()}">
+                    <p class="point_info">You can receive WHATSAPP notification talk service when you fill it out.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="docu_btn_area_bottom">
+          <button class="btn_style01" onclick="suggestQuo();">등록하기</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+<th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+
+</html>
+<script>
+  var header = $("meta[name='_csrf_header']").attr("content");
+  var token = $("meta[name='_csrf']").attr("content");
+  var pop;
+  var rfqGrid;
+  var rfqView;
+  var rfqColumns;
+
+
+  function loadGridRfqList(type, result) {
+    if(type == "init"){
+      rfqView = new wijmo.collections.CollectionView(result, {
+        pageSize: 100,
+        trackChanges : true,
+        calculatedFields :{
+          extendedPrice : ($) => $.qty * $.uprice            }
+      });
+
+      rfqColumns = [
+        { binding: 'itemName', header: 'Item',  width: 150 , align:"center", isReadOnly:true},
+        { binding: 'description', header: 'Description',  width: 150 , align:"center" , isReadOnly:true},
+        { binding: 'qty', header: 'QTY',  width: 80 , align:"center" , isReadOnly:true},
+        { binding: 'amount', header: 'Unit',  width: 150 , align:"center" , isReadOnly:true},
+        { binding: 'uprice', header: 'U/PRICE',  width: 150 , align:"center"},
+        { binding: 'extendedPrice', header: 'Extended Price', width: 150, dataType:'Number', align:"center", isReadOnly:true , allowMerging: false, aggregate: 'Sum'},
+        { binding: 'remark', header: 'REMARK', width: 100, align:"center"},
+      ]
+
+      rfqGrid = new wijmo.grid.FlexGrid('#rfqGrid', {
+        autoGenerateColumns: false,
+        allowMerging: 'Cells',
+        alternatingRowStep: 0,
+        columns : rfqColumns,
+        itemsSource: rfqView,
+        cellEditEnding:function (s,e) {
+          var col = s.columns[e.col];
+          if(col.binding == 'uPrice') {
+            var value = wijmo.changeType(s.activeEditor.value, wijmo.DataType.Number, col.format);
+            if(!wijmo.isNumber(value)){
+              e.cancel = true;
+              e.stayInEditMode = false;
+              alert('숫자로만 입력 가능합니다.');
+              return false;
+            }
+          }
+        },
+      });
+
+      //행번호 표시하기
+      rfqGrid.itemFormatter = function (panel, r, c, cell) {
+        if (panel.cellType == wijmo.grid.CellType.RowHeader) {
+          cell.textContent = (r + 1).toString();
+        }
+        //readOnly 셀컬러 넣기
+
+        if (panel.cellType == wijmo.grid.CellType.Cell) {
+          if (this.columns[c].isReadOnly) {
+            wijmo.addClass(cell, 'read-only');
+          }
+        }
+      };
+
+      rfqGrid.columnFooters.rows.push(new wijmo.grid.GroupRow());
+      rfqGrid.columnFooters.setCellData(0,4,'TOTAL');
+
+    }else {
+      rfqView = new wijmo.collections.CollectionView(result, {
+        trackChanges : true,
+        calculatedFields :{
+          extendedPrice : ($) => $.qty * $.uprice}
+      });
+      rfqGrid.itemsSource = rfqView;
+    }
+  }
+
+  function getRfqDtl(){
+    var param = {
+      rfqQno : $('#rfqQno').val()
+    };
+
+    $.ajax({
+      type : 'GET',
+      url : '/supplier/getRfqDtl',
+      dataType : null,
+      data : param,
+      success : function(result) {
+        console.log("getRfqDtl success");
+        loadGridRfqList('search', result);
+      },
+      error: function(request, status, error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+      }
+    });
+  }
+
+  function goPopup() {
+    pop = window.open("/supplier/jusoPopup", "pop", "width=570, height=420, scrollbars=yes");
+  }
+
+  function jusoCallBack(roadFullAddr, addrDetail) {
+    $("#address").val(roadFullAddr + addrDetail);
+  }
+
+  function suggestQuo(){
+    if($('#company').hasClass('input_alert')) {
+      $('#company').removeClass('input_alert');
+      $('#companyvalid').remove();
+    }
+    if($('#address').hasClass('input_alert')) {
+      $('#address').removeClass('input_alert');
+      $('#addressvalid').remove();
+    }
+    if($('#cellnum').hasClass('input_alert')) {
+      $('#cellnum').removeClass('input_alert');
+      $('#cellnumvalid').remove();
+    }
+    if($('#email').hasClass('input_alert')) {
+      $('#email').removeClass('input_alert');
+      $('#emailvalid').remove();
+    }
+    if($('#ceoname').hasClass('input_alert')) {
+      $('#ceoname').removeClass('input_alert');
+      $('#ceonamevalid').remove();
+    }
+    if($('#name').hasClass('input_alert')) {
+      $('#name').removeClass('input_alert');
+      $('#namevalid').remove();
+    }
+    if($('#mngnum').hasClass('input_alert')) {
+      $('#mngnum').removeClass('input_alert');
+      $('#mngnumvalid').remove();
+    }
+    if($('#packing').hasClass('input_alert')) {
+      $('#packing').removeClass('input_alert');
+      $('#packingvalid').remove();
+    }
+
+    if($('#company').val() == '') {
+      $('#company').addClass('input_alert');
+      $('#companyvalid').addClass('input_alert');
+      $('#companyvalid').text('Please Insert Company Name');
+      $('#company').focus();
+      return false;
+    }
+    if($('#address').val() == '') {
+      $('#address').addClass('input_alert');
+      $('#addressvalid').addClass('input_alert');
+      $('#addressvalid').text('Please Insert Company Address');
+      $('#address').focus();
+      return false;
+    }
+    if($('#cellnum').val() == '') {
+      $('#cellnum').addClass('input_alert');
+      $('#cellnumvalid').addClass('input_alert');
+      $('#cellnumvalid').text('Please Insert Company Phone Number');
+      $('#cellnum').focus();
+      return false;
+    }
+    if($('#email').val() == '') {
+      $('#email').addClass('input_alert');
+      $('#emailvalid').addClass('input_alert');
+      $('#emailvalid').text('Please Insert Email');
+      $('#email').focus();
+      return false;
+    }
+    if($('#comregnum').val() == '') {
+      $('#comregnum').addClass('input_alert');
+      $('#comregnumvalid').addClass('input_alert');
+      $('#comregnumvalid').text('Please Insert Company Register Number');
+      $('#comregnum').focus();
+      return false;
+    }
+    if($('#name').val() == '') {
+      $('#name').addClass('input_alert');
+      $('#namevalid').addClass('input_alert');
+      $('#namevalid').text('Please Insert Name');
+      $('#name').focus();
+      return false;
+    }
+    if($('#mngnum').val() == '') {
+      $('#mngnum').addClass('input_alert');
+      $('#mngnumvalid').addClass('input_alert');
+      $('#mngnumvalid').text('Please Insert Contact Point');
+      $('#mngnum').focus();
+      return false;
+    }
+    if($('#packing').val() == '') {
+      $('#packing').addClass('input_alert');
+      $('#packingvalid').addClass('input_alert');
+      $('#packingvalid').text('Please Insert Packing Information');
+      $('#packing').focus();
+      return false;
+    }
+    var emailRule = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+    if(!emailRule.test($('#email').val())){
+      alert("Wrong Email.")
+      $('#email').focus();
+      return false;
+    }
+
+    var comInfo = {
+      company : $('#company').val(),
+      address : $('#address').val(),
+      website : $('#website').val(),
+      cellnum : $('#cellnum').val(),
+      email : $('#email').val(),
+      comregnum : $('#comregnum').val(),
+      name : $('#name').val(),
+      position : $('#position').val(),
+      mngnum : $('#mngnum').val()
+    }
+
+    $.ajax({
+      url : "/user/savecompany",
+      async : false, // 비동기모드 : true, 동기식모드 : false
+      cache : false,
+      dataType : 'text',
+      data : comInfo,
+      success : function(data) {
+      },
+      error : function(request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+
+    var quotation = {
+      rfqQno : $('#rfqQno').val(),
+      rfqto : $('#rfqto').val(),
+      shipment : $('#shipment').val(),
+      hscode : $('#hscode').val(),
+      packing : $('#packing').val(),
+      rfqItem : $('#rfqItem').val()
+    }
+
+    $.ajax({
+      url : "/supplier/sugQuo",
+      async : false, // 비동기모드 : true, 동기식모드 : false
+      cache : false,
+      dataType : 'text',
+      beforeSend: function(xhr){
+      xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+      },
+      type : 'POST',
+      data : quotation,
+      success : function(data) {
+        suggestQuoDtl();
+      },
+      error : function(request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  }
+
+  function suggestQuoDtl() {
+    var item = rfqGrid.rows;
+    var params;
+    var rows = [];
+
+    for(var i=0; i < item.length; i++) {
+      params = {
+        rfqQno : $('#rfqQno').val(),
+        itemName : rfqGrid.collectionView.items[i].itemName,
+        description : rfqGrid.collectionView.items[i].description,
+        qty : rfqGrid.collectionView.items[i].qty,
+        uprice : rfqGrid.collectionView.items[i].uprice,
+        extendedPrice : rfqGrid.collectionView.items[i].extendedPrice,
+        remark : rfqGrid.collectionView.items[i].remark
+      }
+      rows.push(params);
+    }
+
+    $.ajax({
+      url: "/supplier/sugQuoDtl"
+      , type : 'POST'
+      , contentType: 'application/json'
+      , data : JSON.stringify(rows)
+      , beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);	// 헤드의 csrf meta태그를 읽어 CSRF 토큰 함께 전송
+      }
+      , success: function (response) {
+        alert(" 견적이 등록되었습니다.");
+        location.href = "/supplier/allQuo"
+      }
+      , error: function (request,status,error) {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+
+  }
+
+
+
+  $(document.body).ready(function() {
+    $('#allQuo').addClass('active');
+    loadGridRfqList('init');
+    getRfqDtl();
+  });
+</script>

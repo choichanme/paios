@@ -1,0 +1,18 @@
+<div class="list_item flex_wrap" th:each="feedVo : ${feedVo}" th:classappend="${feedVo.rejectYn} != null ? 'disabled'">
+    <div class="box">
+        <p class="quatation_num" th:text="'Quatation Number : '+ ${feedVo.rfqQno}"><span class="material-icons-outlined">content_copy</span>Quatation Number : </p>
+        <ul class="quatation_info">
+            <li th:text="'아이템 : ' + ${feedVo.rfqItem}">아이템 : butterfly valve</li>
+        </ul>
+    </div>
+    <div class="box">
+        <p class="step">견적 피드백 :</p>
+        <p class="step_txt" th:if="${feedVo.rejectYn} == null">"supplier의 견적에 피드백을 주세요"</p>
+        <p class="step_txt" th:if="${feedVo.rejectYn} != null">"견적 마감되었습니다."</p>
+    </div>
+    <div class="box btn">
+        <button class="btn_style03" th:onclick="'location.href=\''+ @{'/buyer/feed?rfqQno=' + ${feedVo.rfqQno}} + '\''" th:if="${feedVo.rejectYn} == null">견적피드백 진행</button>
+        <button class="btn_style03" th:onclick="'location.href=\''+ @{'/buyer/alldoc?rfqQno=' + ${feedVo.rfqQno}} + '\''">전체 서류</button>
+    </div>
+</div>
+

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="css/komal.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="js/komal.js"></script>
+</head>
+
+<body class="bg02">
+  <header class="header forwarding">
+    <div class="inner">
+      <a href="/" class="logo"></a>
+
+      <div class="menu_wrap">
+        <ul class="menu01">
+          <li><a href="">이용방법</a></li>
+          <li><a href="">이용후기</a></li>
+        </ul>
+
+        <div class="menu02">
+          <a class="">FORWARDING</a>
+          <span class="material-icons-outlined">arrow_drop_down</span>
+          <ul>
+            <li><a href="">BUYER</a></li>
+            <li><a href="naver.com">SUPPLIER</a></li>
+            <li><a href="">FORWARDING</a></li>
+          </ul>
+        </div>
+
+        <ul class="cust_menu">
+          <li><a href="">LOGIN</a></li>
+          <li><a href="">MYPAGE</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </header>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="forwarding_qm_order_docu">
+    <div class="inner">
+      <div class="process_wrap">
+        <div class="process_txt_wrap">
+          <p class="tit">FORWARDING PROCESS</p>
+          <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+        </div>
+
+        <div class="flex_wrap">
+          <div class="flex_box entire" onclick="location.href='dd'">
+            <p class="step">전체</p>
+          </div>
+          <div class="flex_box" data-num="1" onclick="location.href='dd'">
+            <div class="icon_wrap">
+              <img src="img/process_icon01.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+              <p class="step">STEP01</p>
+              <p class="step_txt">견적내기</p>
+            </div>
+          </div>
+          <span class="material-icons-outlined arrow">chevron_right</span>
+          <div class="flex_box active" data-num="2" onclick="location.href='dd'">
+            <div class="icon_wrap">
+              <img src="img/process_icon02.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+              <p class="step">STEP02</p>
+              <p class="step_txt">발주</p>
+            </div>
+          </div>
+          <span class="material-icons-outlined arrow">chevron_right</span>
+          <div class="flex_box" data-num="1" onclick="location.href='dd'">
+            <div class="icon_wrap">
+              <img src="img/process_icon03.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+              <p class="step">STEP03</p>
+              <p class="step_txt">배송ㆍ결제</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cont_wrap">
+
+        <h3>제출서류목록</h3>
+
+        <div class="docu_submission">
+          <h4>COURIER</h4>
+          <div class="item">
+            <p class="item_tit"><span>01</span> Invoice</p>
+            <div class="file_input">
+              <input type="file">
+              <div class="btn">Choose</div>
+              <p data-js-label="">No file selected</p>
+            </div>
+          </div>
+          <div class="item">
+            <p class="item_tit"><span>02</span> 운송장</p>
+            <div class="file_input">
+              <input type="file">
+              <div class="btn">Choose</div>
+              <p data-js-label="">No file selected</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <p class="item_tit"><span>03</span> 위험물 미적입확인서</p>
+            <div class="file_input">
+              <input type="file">
+              <div class="btn">Choose</div>
+              <p data-js-label="">No file selected</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <p class="item_tit"><span>04</span> 수출면장</p>
+            <div class="file_input">
+              <input type="file">
+              <div class="btn">Choose</div>
+              <p data-js-label="">No file selected</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <p class="item_tit"><span>05</span> 보험증서</p>
+            <div class="file_input">
+              <input type="file">
+              <div class="btn">Choose</div>
+              <p data-js-label="">No file selected</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <p class="item_tit"><span>06</span> K1 or K3</p>
+            <div class="file_input">
+              <input type="file">
+              <div class="btn">Choose</div>
+              <p data-js-label="">No file selected</p>
+            </div>
+          </div>
+
+          <p class="point_info">운송장, K1 or K3는 Buyer와 공유하는 서류입니다.</p>
+          <p class="point_info">K1 or K3는 DDP 조건일 때만 제출하는 서류입니다.</p>
+
+        </div>
+
+        <div class="btn_wrap">
+          <button class="btn_style01">다음단계</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="top">
+      <div class="inner">
+        <ul>
+          <li><a href="">이용약관</a></li>
+          <li><a href="">개인정보처리방침</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="inner">
+        <a href="#" class="footer_logo"></a>
+        <p class="copyright">COPYRIGHT 2021 KOMAL. ALL RIGHTS RESERVED</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

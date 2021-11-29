@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="utf-8">
+  <title>로그인</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+  <th:block th:replace="fragment/config :: configFragment" ></th:block>
+  <script>
+    function login() {
+      if($('#email').val() == ""){
+        alert("이메일을 입력해주세요.");
+        $('#email').focus();
+        return false;
+      }
+      if($('#pwd').val() == ""){
+        alert("비밀번호를 입력해주세요.");
+        $('#pwd').focus();
+        return false;
+      }
+      if($('#email').val() != "" && $('#pwd').val() != "") {
+        $('#login').submit();
+      }
+    }
+
+    function enterkey(){
+      if(window.event.keyCode == 13) {
+        login();
+      }
+    }
+  </script>
+</head>
+<body>
+  <th:block th:replace="fragment/header :: headerFragment" ></th:block>
+  <div class="login bg01">
+    <div class="login_inner">
+      <div class="login_wrap">
+        <h1>Welcom to KOMAL</h1>
+        <form id="login" action="/user/login" method="post">
+        <div class="login_form_wrap">
+          <div class="form_wrap">
+            <p class="form_name">Email</p>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input id="email" type="text" name="username" placeholder="Email" onkeyup="enterkey();"/>
+          </div>
+          <div class="form_wrap">
+            <p class="form_name">Password</p>
+            <input id="password" type="password" name="password" placeholder="Password" onkeyup="enterkey();"/>
+          </div>
+          <div th:if="${param.error}">
+            <span class="input_alert">잘못된 아이디나 암호입니다.</span>
+          </div>
+          <div class="sub_area">
+            <div class="chk_wrap">
+              <input type="checkbox" name="" value="">
+              <span>자동로그인</span>
+            </div>
+            <div class="find_btn_wrap">
+              <a href="/user/findInquiry">이메일 찾기</a>
+              <a href="/user/findInquiry">패스워드 찾기</a>
+            </div>
+          </div>
+          <button type="button" class="btn_style01" onclick="login();" >LOGIN</button>
+        </div>
+        </form>
+        <div class="sign_wrap">
+          <p>Don’t have an account?</p><a href="/user/register">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <th:block th:replace="fragment/footer :: footerFragment" ></th:block>
+
+</body>
+
+</html>

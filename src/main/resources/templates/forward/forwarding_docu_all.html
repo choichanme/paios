@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="css/komal.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="js/komal.js"></script>
+</head>
+
+<body class="bg02">
+  <header class="header">
+    <div class="inner">
+      <a href="/" class="logo"></a>
+
+      <div class="menu_wrap">
+        <ul class="menu01">
+          <li><a href="">이용방법</a></li>
+          <li><a href="">이용후기</a></li>
+        </ul>
+
+        <div class="menu02">
+          <a class="">BUYER</a>
+          <span class="material-icons-outlined">arrow_drop_down</span>
+          <ul>
+            <li><a href="">BUYER</a></li>
+            <li><a href="naver.com">SUPPLIER</a></li>
+            <li><a href="">FORWARDING</a></li>
+          </ul>
+        </div>
+
+        <ul class="cust_menu">
+          <li><a href="">LOGIN</a></li>
+          <li><a href="">MYPAGE</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </header>
+
+  <div class="sub_tit_wrap">
+    <div class="inner">
+      <div class="sub_txt_wrap">
+        <p class="tit"><span>견적관리</span></p>
+        <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="forwarding_docu_all">
+    <div class="inner">
+      <div class="process_wrap">
+        <div class="process_txt_wrap">
+          <p class="tit">FORWARDING PROCESS</p>
+          <p class="txt">RFQ를 단계별로 쉽고 빠르게 관리하세요!</p>
+        </div>
+
+        <div class="flex_wrap">
+          <div class="flex_box entire active" onclick="location.href='dd'">
+            <p class="step">전체</p>
+          </div>
+          <div class="flex_box" data-num="1" onclick="location.href='dd'">
+            <div class="icon_wrap">
+              <img src="img/process_icon01.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+              <p class="step">STEP01</p>
+              <p class="step_txt">견적내기</p>
+            </div>
+          </div>
+          <span class="material-icons-outlined arrow">chevron_right</span>
+          <div class="flex_box" data-num="2" onclick="location.href='dd'">
+            <div class="icon_wrap">
+              <img src="img/process_icon02.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+              <p class="step">STEP02</p>
+              <p class="step_txt">발주</p>
+            </div>
+          </div>
+          <span class="material-icons-outlined arrow">chevron_right</span>
+          <div class="flex_box" data-num="1" onclick="location.href='dd'">
+            <div class="icon_wrap">
+              <img src="img/process_icon03.svg" alt="">
+            </div>
+            <div class="txt_wrap">
+              <p class="step">STEP03</p>
+              <p class="step_txt">배송ㆍ결제</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cont_wrap">
+        <div class="list">
+          <div class="list_item flex_wrap">
+            <div class="box">
+              <p class="quatation_num"><span class="material-icons-outlined">content_copy</span>Quatation Number : 11111</p>
+              <ul class="quatation_info">
+                <li>아이템 : butterfly valve</li>
+              </ul>
+            </div>
+            <div class="box">
+              <p class="step">견적내기 :</p>
+              <p class="step_txt">"KOMAL 검수 중입니다."</p>
+            </div>
+            <div class="box btn">
+              <button class="btn_style03">전체서류</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="docu_overview_wrap">
+
+          <div class="docu_overview">
+            <div class="docu_viewer">
+              <div class="docu_overview_btn_wrap">
+                <a href="" class="print_btn"><span class="material-icons-outlined">print</span> 인쇄</a>
+              </div>
+              서류 이미지
+            </div>
+            <div class="docu_list_wrap">
+              <div class="docu_required">서류 목록</div>
+              <ol class="docu_list">
+                <li class="active">견적서</li>
+                <li>Invoice</li>
+                <li>운송장</li>
+                <li>위험물 미적입확인서</li>
+                <li>수출면장</li>
+                <li>보험증서</li>
+                <li>K1 or K3</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="top">
+      <div class="inner">
+        <ul>
+          <li><a href="">이용약관</a></li>
+          <li><a href="">개인정보처리방침</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="inner">
+        <a href="#" class="footer_logo"></a>
+        <p class="copyright">COPYRIGHT 2021 KOMAL. ALL RIGHTS RESERVED</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
