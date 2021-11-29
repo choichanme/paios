@@ -38,3 +38,12 @@
 /* 버튼 */
 .cms_btn01{background:#fff;display:inline-flex;align-items:center;padding:calc(var(--spacing) / 2) calc(var(--spacing) * 1);border:1px solid var(--bor-color);border-radius:4px;font-size:14px;color:var(--txt-color);}
 .cms_btn01 span{color:var(--txt-color);}
+
+
+
+
+
+
+.test {
+    
+}
