@@ -673,3 +673,6 @@ div[class*="buyer_qm_payment_"] .tab_wrap{margin-top:calc(var(--spacing) * 8);}
  .read-only{
    background-color:#C0C0C0 !important;
  }
+
+
+ body{color:#fff;}
